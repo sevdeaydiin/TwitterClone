@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:twitter-clone-app.xcodeproj">
+   </FileRef>
+   <Group
+      location = "group:iOS"
+      name = "iOS">
+      <FileRef
+         location = "group:../../iOS/Info.plist">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:../../../Downloads/twitter-clone-frontend/macOS"
+      name = "macOS">
+      <FileRef
+         location = "group:../../../../Downloads/twitter-clone-frontend/macOS/macOS.entitlements">
+      </FileRef>
+      <FileRef
+         location = "group:../../../../Downloads/twitter-clone-frontend/macOS/Info.plist">
+      </FileRef>
+   </Group>
+</Workspace>
