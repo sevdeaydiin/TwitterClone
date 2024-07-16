@@ -472,18 +472,4 @@
 				B09C74F12C4557E700902B42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B09C74F22C4557E700902B42 /* Build configuration list for PBXNativeTarget "twitter-clone-app" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B09C74F32C4557E700902B42 /* Debug */,
-				B09C74F42C4557E700902B42 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = B09C74DC2C4557E700902B42 /* Project object */;
-}
+			defau
