@@ -17,6 +17,7 @@ struct Home: View {
             ZStack {
                 TabView {
                     Feed()
+                        .toolbar(.hidden)
                         .onTapGesture {
                             self.selectedIndex = 0
                         }
@@ -32,6 +33,7 @@ struct Home: View {
                         .tag(0)
                         
                     SearchView()
+                        .toolbar(.hidden)
                         .onTapGesture {
                             self.selectedIndex = 1
                         }
@@ -47,6 +49,7 @@ struct Home: View {
                         .tag(1)
                     
                     NotificationsView()
+                        .toolbar(.hidden)
                         .onTapGesture {
                             print(self.selectedIndex)
                             self.selectedIndex = 2
@@ -63,6 +66,7 @@ struct Home: View {
                         .tag(2)
                     
                     MessagesView()
+                        .toolbar(.hidden)
                         .onTapGesture {
                             print(self.selectedIndex)
                             self.selectedIndex = 3

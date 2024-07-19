@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SlideMenu: View {
     
-    @State var show = false
+    @State var show = true
     var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
     
