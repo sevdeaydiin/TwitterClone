@@ -9,14 +9,12 @@ import SwiftUI
 
 struct NotificationCell: View {
     
-    @State var width = UIScreen.main.bounds.width
-    
     var body: some View {
         VStack {
             Rectangle()
-                .frame(width: width, height: 1, alignment: .center)
+                .frame(width: Sizes.width, height: 1, alignment: .center)
                 .foregroundStyle(.gray)
-                .opacity(0.3)
+                .opacity(Stable.opacitiy)
             
             HStack (alignment: .top) {
                 
