@@ -5,4 +5,10 @@
 //  Created by Sevde Aydın on 19.07.2024.
 //
 
-import Foundation
+import SwiftUI
+
+struct Sizes {
+    static let width = UIScreen.main.bounds.width
+    static let height = UIScreen.main.bounds.height
+    
+}

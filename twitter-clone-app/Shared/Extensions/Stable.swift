@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Stable {
+    static let opacitiy = 0.3
+}
