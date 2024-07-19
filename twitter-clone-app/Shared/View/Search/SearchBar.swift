@@ -30,17 +30,19 @@ struct SearchBar: View {
 
                     }
                 )
-            
-            Button {
-                isEditing = false
-                text = ""
-                UIApplication.shared.endEditing()
-            } label: {
-                Text("Cancel")
-                    .fontWeight(.light)
-                    .foregroundStyle(.black)
-                    .padding(.trailing, 10)
+            if isEditing {
+                Button {
+                    isEditing = false
+                    text = ""
+                    UIApplication.shared.endEditing()
+                } label: {
+                    Text("Cancel")
+                        .fontWeight(.light)
+                        .foregroundStyle(.black)
+                        .padding(.trailing, 10)
+                }
             }
+            
             
         }.padding(.horizontal, 15)
             .onTapGesture {

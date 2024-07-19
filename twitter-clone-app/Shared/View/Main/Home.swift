@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Home: View {
     
-    @State var selectedIndex = 0
+    @State var selectedIndex: Int
     @State var showCreateTweet = false
     
     var body: some View {
@@ -48,6 +48,7 @@ struct Home: View {
                     
                     NotificationsView()
                         .onTapGesture {
+                            print(self.selectedIndex)
                             self.selectedIndex = 2
                         }
                         .tabItem {
@@ -63,6 +64,7 @@ struct Home: View {
                     
                     MessagesView()
                         .onTapGesture {
+                            print(self.selectedIndex)
                             self.selectedIndex = 3
                         }
                         .tabItem {
@@ -81,20 +83,40 @@ struct Home: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Button {
-                            self.showCreateTweet.toggle()
-                        } label: {
-                            Image(systemName: "plus")
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                                //.renderingMode(.template)
-                                //.resizable()
-                                .frame(width: 20, height: 20)
-                                .padding()
-                                .background(Color.bg)
-                                
-                                .clipShape(Circle())
-                    }
+                        
+                        if self.selectedIndex == 3 {
+                            Button {
+                                print(self.selectedIndex)
+                                self.showCreateTweet.toggle()
+                            } label: {
+                                Image(systemName: "plus.message.fill")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    //.renderingMode(.template)
+                                    //.resizable()
+                                    .frame(width: 20, height: 20)
+                                    .padding()
+                                    .background(Color.bg)
+                                    
+                                    .clipShape(Circle())
+                        }
+                        } else {
+                            Button {
+                                self.showCreateTweet.toggle()
+                            } label: {
+                                Image(systemName: "plus")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.white)
+                                    //.renderingMode(.template)
+                                    //.resizable()
+                                    .frame(width: 20, height: 20)
+                                    .padding()
+                                    .background(Color.bg)
+                                    
+                                    .clipShape(Circle())
+                        }
+                        }
+                        
                     }.padding()
                 }.padding(.bottom, 50)
             }
@@ -105,5 +127,5 @@ struct Home: View {
 }
 
 #Preview {
-    Home()
+    Home(selectedIndex: 0)
 }
