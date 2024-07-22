@@ -80,6 +80,8 @@ struct TweetCellView: View {
                 }.foregroundStyle(.gray)
             }.padding(.top, 4)
         }
+        .padding(.horizontal, 10)
+        .padding(.top, 15)
     }
 }
 
@@ -87,4 +89,4 @@ struct TweetCellView: View {
     TweetCellView(tweet: text)
 }
 
-var text = "nasıl iş bulcaz bilmiyorum nasıl olacak"
+var text = "nasıl iş bulcaz bilmiyorum nasıl olacak ahhs bilmiyorum nolcak"

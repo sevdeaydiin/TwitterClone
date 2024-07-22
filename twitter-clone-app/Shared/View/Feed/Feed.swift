@@ -19,7 +19,7 @@ struct Feed: View {
                 }
             }
             .padding(.top)
-            .padding(.horizontal)
+            //.padding(.horizontal)
             .zIndex(0)
         }
     }
