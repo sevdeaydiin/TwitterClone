@@ -14,13 +14,14 @@ struct RegisterView: View {
     @State var name = ""
     @State var email = ""
     @State var password = ""
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
             ZStack {
                 HStack {
                     Button(action: {
-                        
+                        dismiss()
                     }, label: {
                         Text("Cancel")
                             .foregroundStyle(.blue)

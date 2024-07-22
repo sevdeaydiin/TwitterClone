@@ -58,16 +58,18 @@ struct WelcomeView: View {
                     
                     OrRectangleView()
                     
-                    RoundedRectangle(cornerRadius: 36)
-                        .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
-                        .frame(width: 320, height: 60, alignment: .center)
-                        .overlay(
-                            Text("Create account")
-                                .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title3)
-                                .padding()
-                        )
+                    NavigationLink (destination: RegisterView().toolbar(.hidden)) {
+                        RoundedRectangle(cornerRadius: 36)
+                            .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
+                            .frame(width: 320, height: 60, alignment: .center)
+                            .overlay(
+                                Text("Create account")
+                                    .foregroundStyle(.white)
+                                    .fontWeight(.bold)
+                                    .font(.title3)
+                                    .padding()
+                            )
+                    }
                 })
                 .padding()
                 
@@ -84,8 +86,10 @@ struct WelcomeView: View {
                     
                     HStack(spacing: 2) {
                         Text("Have an account already? ")
-                        Text("Log in")
-                            .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
+                        NavigationLink(destination: LoginView().toolbar(.hidden)) {
+                            Text("Log in")
+                                .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
+                        }
                     }
                 })
                 
