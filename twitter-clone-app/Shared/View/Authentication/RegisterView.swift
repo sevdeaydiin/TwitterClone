@@ -13,7 +13,7 @@ struct RegisterView: View {
     
     @State var name = ""
     @State var email = ""
-    @State var birthDate = ""
+    @State var password = ""
     
     var body: some View {
         VStack {
@@ -42,7 +42,7 @@ struct RegisterView: View {
             VStack(alignment: .leading) {
                 CustomAuthTextField(placeholder: "Name", text: $name)
                 CustomAuthTextField(placeholder: "Phone number or email", text: $email)
-                CustomAuthTextField(placeholder: "Date of birth", text: $birthDate)
+                CustomAuthTextField(placeholder: "Password", text: $password)
             }
             Spacer()
             
@@ -54,7 +54,7 @@ struct RegisterView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        self.viewModel.register(reqBody: ["username": "demo123", "name": name, "email": email, "password": "123456789"])
+                        self.viewModel.register(name: name, username: name, email: email, password: password)
                     }, label: {
                         Capsule()
                             .frame(width: 60, height: 30, alignment: .center)
