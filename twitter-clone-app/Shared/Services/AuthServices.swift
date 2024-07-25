@@ -86,4 +86,38 @@ public class AuthServices {
             
         task.resume()
     }
+    
+    // Fetch user func
+    static func fetchUser(id: String, completion: @escaping (_ result: Result<Data, AuthenticationError>) -> Void) {
+        
+        let urlString = URL(string: "http://localhost:3000/users/\(id)")!
+        var urlRequest = URLRequest(url: urlString)
+        
+        let session = URLSession.shared
+        
+        urlRequest.httpMethod = "GET"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let task = session.dataTask(with: urlRequest) { data, res, err in
+            
+            guard let err = err else { return }
+            
+            guard let data = data else { return completion(.failure(.invalidCredentials)) }
+            
+            completion(.success(data))
+            
+            do {
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                    
+                }
+            } catch let err {
+                completion(.failure(.invalidCredentials))
+                print(err)
+            }
+        }
+        
+        task.resume()
+        
+    }
 }
