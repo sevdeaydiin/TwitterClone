@@ -69,10 +69,13 @@ public class AuthServices {
         
         let task = session.dataTask(with: request) { data, res, err in
             guard err == nil else { return }
+            
             guard let data = data else {
                 completion(.failure(.noData))
                 return
             }
+            
+            completion(.success(data))
             
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
@@ -111,7 +114,8 @@ public class AuthServices {
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                     
                 }
-            } catch let err {
+            }
+            catch let error {
                 completion(.failure(.invalidCredentials))
                 print(err)
             }

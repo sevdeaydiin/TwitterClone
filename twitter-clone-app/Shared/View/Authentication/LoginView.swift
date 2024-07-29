@@ -152,9 +152,4 @@ struct PasswordView: View {
                     })
                     .padding(.bottom, 4)
                 }
-                Text("Forgot password?")
-                    .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
-            }
-        }
-    }
-}
+             
