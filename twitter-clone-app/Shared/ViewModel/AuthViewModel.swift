@@ -15,6 +15,8 @@ class AuthViewModel: ObservableObject {
     init() {
         let defaults = UserDefaults.standard
         let token = defaults.object(forKey: "jsonwebtoken")
+        print(token)
+        //logout()
         //defaults.removeObject(forKey: "jsonweboken")
         
         if token != nil {
@@ -37,18 +39,18 @@ class AuthViewModel: ObservableObject {
         
         AuthServices.login(email: email, password: password) { result in
             switch result {
-            case .success(let data):
-                guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data!) else { return }
-                DispatchQueue.main.async {
-                    defaults.set(user.token, forKey: "jsonwebtoken")
-                    defaults.set(user.user.id, forKey: "userid")
-                    self.isAuthenticated = true
-                    self.currentUser = user.user
-                    print("logged in")
+                case .success(let data):
+                    guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data as! Data) else { return }
+                    DispatchQueue.main.async {
+                        defaults.set(user.token, forKey: "jsonwebtoken")
+                        defaults.set(user.user.id, forKey: "userid")
+                        self.isAuthenticated = true
+                        self.currentUser = user.user
+                        print("logged in")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
         }
     }
     
@@ -56,32 +58,32 @@ class AuthViewModel: ObservableObject {
         
         AuthServices.register(email: email, username: username, password: password, name: name) { result in
             switch result {
-            case .success(let data):
-                guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data!) else {
-                    return
+                case .success(let data):
+                guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data as! Data) else {
+                        return
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
         }
     }
     
     func fetchUser(userId: String) {
         AuthServices.fetchUser(id: userId) { result in
             switch result {
-            case .success(let data):
-                guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
-                
-                DispatchQueue.main.async {
-                    UserDefaults.standard.setValue(user.id, forKey: "userid")
-                    self.isAuthenticated = true
-                    self.currentUser = user
-                    print(user)
+                case .success(let data):
+                    guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
+                    
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.setValue(user.id, forKey: "userid")
+                        self.isAuthenticated = true
+                        self.currentUser = user
+                        print(user)
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
         }
     }
     

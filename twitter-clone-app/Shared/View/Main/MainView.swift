@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
+    let user: User
+    
     @State var width = Sizes.width - 90
     @State var x = -Sizes.width + 90
     
@@ -23,6 +25,7 @@ struct MainView: View {
                     .overlay(
                         Color.black.opacity(x == 0 ? 0.5 : 0)
                     )
+                    .offset(x: x == 0 ? width : 0)
                     
                     SlideMenu()
                         .shadow(color: .black.opacity(x != 0 ? 0.1 : 0), radius: 5, x: 5, y: 0)
@@ -70,6 +73,3 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}
