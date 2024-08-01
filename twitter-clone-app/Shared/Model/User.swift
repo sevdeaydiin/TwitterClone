@@ -24,6 +24,6 @@ struct User: Decodable, Identifiable {
     var bio: String?
     var website: String?
     var avatarExists: String?
-    var followers: [String]
-    var following: [String]
+    var followers: [String]?
+    var following: [String]?
 }

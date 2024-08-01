@@ -22,8 +22,8 @@ class AuthViewModel: ObservableObject {
         if token != nil {
             isAuthenticated = true
              
-            if let userId = defaults.object(forKey: "userid") {
-                fetchUser(userId: userId as! String)
+            if let userId = defaults.object(forKey: "userid") as? String {
+                fetchUser(userId: userId)
                 print("User fetched")
             }
         } else {
@@ -38,21 +38,37 @@ class AuthViewModel: ObservableObject {
         let defaults = UserDefaults.standard
         
         AuthServices.login(email: email, password: password) { result in
+            print("login func")
             switch result {
                 case .success(let data):
-                    guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data as! Data) else { return }
-                    DispatchQueue.main.async {
-                        defaults.set(user.token, forKey: "jsonwebtoken")
-                        defaults.set(user.user.id, forKey: "userid")
-                        self.isAuthenticated = true
-                        self.currentUser = user.user
-                        print("logged in")
+                    if let data = data {
+                        if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                            print("Response JSON: \(json)")
+                        } else {
+                            print("Failed to serialize JSON")
+                        }
+                        
+                        do {
+                            let user = try JSONDecoder().decode(ApiResponse.self, from: data)
+                            DispatchQueue.main.async {
+                                defaults.set(user.token, forKey: "jsonwebtoken")
+                                defaults.set(user.user.id, forKey: "userid")
+                                self.isAuthenticated = true
+                                self.currentUser = user.user
+                                print("logged in")
+                            }
+                        } catch {
+                            print("JSON decode error: \(error.localizedDescription)")
+                        }
+                    } else {
+                        print("Data is nil")
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                }
+            }
         }
     }
+
     
     func register(name: String, username: String, email: String, password: String) {
         
@@ -72,7 +88,7 @@ class AuthViewModel: ObservableObject {
         AuthServices.fetchUser(id: userId) { result in
             switch result {
                 case .success(let data):
-                    guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
+                    guard let user = try? JSONDecoder().decode(User.self, from: data as! Data) else { return }
                     
                     DispatchQueue.main.async {
                         UserDefaults.standard.setValue(user.id, forKey: "userid")

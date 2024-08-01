@@ -12,6 +12,9 @@ struct LoginView: View {
     @State var email = ""
     @State var password = ""
     @State var emailDone = false
+    @EnvironmentObject var viewModel: AuthViewModel
+    //let user: User?
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         if !emailDone {
@@ -24,10 +27,6 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-}
-
 struct EmailView: View {
     
     @Binding var email: String
@@ -38,7 +37,6 @@ struct EmailView: View {
         VStack {
             VStack {
                 ZStack {
-                    
                     HStack {
                         Button(action: {
                             dismiss()
@@ -97,7 +95,7 @@ struct PasswordView: View {
     @Binding var password: String
     @Binding var emailDone: Bool
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
@@ -135,12 +133,11 @@ struct PasswordView: View {
             Spacer()
             
             VStack {
-                NavigationLink(destination: MainView().toolbar(.hidden)) {
                     Button(action: {
                         print(email)
                         print(password)
                         self.viewModel.login(email: email, password: password)
-                        emailDone.toggle()
+                        //emailDone.toggle()
                     }, label: {
                         Capsule()
                             .frame(width: 360, height: 40, alignment: .center)
@@ -151,5 +148,10 @@ struct PasswordView: View {
                             }
                     })
                     .padding(.bottom, 4)
-                }
-             
+    
+                Text("Forgot password?")
+                    .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
+            }
+        }
+    }
+}

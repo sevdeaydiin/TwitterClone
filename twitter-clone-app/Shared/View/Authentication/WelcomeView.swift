@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WelcomeView: View {
+
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -58,7 +61,7 @@ struct WelcomeView: View {
                     
                     OrRectangleView()
                     
-                    NavigationLink (destination: RegisterView().toolbar(.hidden)) {
+                    NavigationLink(destination: RegisterView().toolbar(.hidden)) {
                         RoundedRectangle(cornerRadius: 36)
                             .foregroundStyle(Color(red: 29 / 255, green: 161 / 255, blue: 242 / 255))
                             .frame(width: 320, height: 60, alignment: .center)
@@ -100,10 +103,6 @@ struct WelcomeView: View {
     }
 }
 
-#Preview {
-    WelcomeView()
-}
-
 struct TwitterLogoView: View {
     var body: some View {
         HStack {
@@ -133,4 +132,8 @@ struct OrRectangleView: View {
                 .frame(width: (getRect().width * 0.35), height: 1)
         }
     }
+}
+
+#Preview {
+    WelcomeView()
 }

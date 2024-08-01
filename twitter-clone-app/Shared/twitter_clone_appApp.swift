@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct twitter_clone_appApp: App {
+    
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
