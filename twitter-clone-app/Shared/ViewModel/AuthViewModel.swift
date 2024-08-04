@@ -28,6 +28,7 @@ class AuthViewModel: ObservableObject {
             }
         } else {
             isAuthenticated = false
+            currentUser = nil
         }
     }
     
@@ -88,7 +89,7 @@ class AuthViewModel: ObservableObject {
         AuthServices.fetchUser(id: userId) { result in
             switch result {
                 case .success(let data):
-                    guard let user = try? JSONDecoder().decode(User.self, from: data as! Data) else { return }
+                guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
                     
                     DispatchQueue.main.async {
                         UserDefaults.standard.setValue(user.id, forKey: "userid")
@@ -113,6 +114,7 @@ class AuthViewModel: ObservableObject {
         
         DispatchQueue.main.async {
             self.isAuthenticated = false
+            self.currentUser = nil
         }
     }
     

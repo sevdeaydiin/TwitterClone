@@ -15,12 +15,12 @@ struct MainView: View {
     @State var x = -Sizes.width + 90
     
     var body: some View {
-        NavigationView {
+
             VStack {
                 ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
                     VStack {
                         TopBar(x: $x)
-                        Home(selectedIndex: 0)
+                        Home()
                     }
                     .overlay(
                         Color.black.opacity(x == 0 ? 0.5 : 0)
@@ -70,6 +70,6 @@ struct MainView: View {
             .toolbar(.hidden)
             .navigationTitle("")
         }
-    }
+    
 }
 

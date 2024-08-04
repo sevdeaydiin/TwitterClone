@@ -40,8 +40,3 @@ struct CreateTweetView: View {
             
             MultilineTextField(text: $text)
             //TextField("What's happening?", text: $text)
-            
-        }.padding()
-    }
-}
-

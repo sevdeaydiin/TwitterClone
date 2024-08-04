@@ -93,7 +93,7 @@ public class AuthServices {
     // Fetch user func
     static func fetchUser(id: String, completion: @escaping (_ result: Result<Data, AuthenticationError>) -> Void) {
         
-        let urlString = URL(string: "http://localhost:3000/users/\(id)")!
+        let urlString = URL(string: "\(NetworkConstants.baseURL)users/\(id)")!
         var urlRequest = URLRequest(url: urlString)
         
         let session = URLSession.shared
@@ -117,7 +117,7 @@ public class AuthServices {
             }
             catch let error {
                 completion(.failure(.invalidCredentials))
-                print(err)
+                print(error)
             }
         }
         
