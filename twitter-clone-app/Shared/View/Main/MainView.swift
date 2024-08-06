@@ -20,7 +20,7 @@ struct MainView: View {
                 ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
                     VStack {
                         TopBar(x: $x)
-                        Home()
+                        Home(x: $x, user: user)
                     }
                     .overlay(
                         Color.black.opacity(x == 0 ? 0.5 : 0)
