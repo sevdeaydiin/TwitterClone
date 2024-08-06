@@ -43,4 +43,32 @@ public class RequestServices {
         }
         task.resume()
     }
+    
+    static func fetchTweets(completion: @escaping (_ result: Result<Data?, NetworkError>) -> Void) {
+        
+        let url = URL(string: requestDomain)!
+        print(url)
+        
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 120.0
+        sessionConfig.timeoutIntervalForResource = 120.0
+        let session = URLSession(configuration: sessionConfig)
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let task = session.dataTask(with: request) { data, res, err in
+            guard err == nil else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            guard let data = data else { return }
+            completion(.success(data))
+        }
+        task.resume()
+    }
+    
 }

@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct TweetCellView: View {
+           
+    @ObservedObject var viewModel: TweetCellViewModel
     
-    var tweet: String
-    var tweetImage: String?
-    
+    init(viewModel: TweetCellViewModel) {
+        self.viewModel = viewModel
+        print("cell view: \(viewModel.tweet)")
+    }
     
     var body: some View {
         VStack {
@@ -23,17 +26,17 @@ struct TweetCellView: View {
                     .clipShape(Circle())
                     
                 VStack (alignment: .leading, spacing: 10) {
-                    Text("sevde ")
+                    Text("\(self.viewModel.tweet.username)")
                         .fontWeight(.bold)
                         .foregroundStyle(.primary)
                     +
-                    Text("@sevdeaydiin")
+                    Text("@\(self.viewModel.tweet.username)")
                         .foregroundStyle(.gray)
                     
-                    Text(tweet)
+                    Text(self.viewModel.tweet.text)
                         .frame(maxHeight: 100, alignment: .top)
                     
-                    if let image = tweetImage {
+                    /*if let image = tweetImage {
                         GeometryReader { proxy in
                             Image(image)
                                 .resizable()
@@ -41,7 +44,7 @@ struct TweetCellView: View {
                                 .frame(width: proxy.frame(in: .global).width, height: 250)
                                 .cornerRadius(15)
                         }.frame(height: 250)
-                    }
+                    }*/
                 }
             }
             
@@ -85,8 +88,3 @@ struct TweetCellView: View {
     }
 }
 
-#Preview {
-    TweetCellView(tweet: text)
-}
-
-var text = "nasıl iş bulcaz bilmiyorum nasıl olacak ahhs bilmiyorum nolcak"

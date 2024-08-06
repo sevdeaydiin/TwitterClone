@@ -29,7 +29,7 @@ struct CreateTweetView: View {
                 
                 Button {
                     if text != "" {
-                        self.viewModel.uploadPost(text: text)
+                        self.viewModel.uploadPost(text: text, image: selectedImage)
                         self.show.toggle()
                     }
                 }label: {
