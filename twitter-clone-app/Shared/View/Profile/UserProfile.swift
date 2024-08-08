@@ -154,8 +154,7 @@ struct UserProfile: View {
                     }.zIndex(1)
                     
                     VStack(spacing: 18, content: {
-                        TweetCellView(tweet: "işte böyle", tweetImage: "logo")
-                        TweetCellView(tweet: "selam hello naber iyidir jasn shahsa gaghsa ahgsh hjs dhk sjhah")
+                        
                     })
                         
                     

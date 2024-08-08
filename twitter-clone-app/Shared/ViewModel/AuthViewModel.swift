@@ -15,7 +15,6 @@ class AuthViewModel: ObservableObject {
     init() {
         let defaults = UserDefaults.standard
         let token = defaults.object(forKey: "jsonwebtoken")
-        print(token)
         //logout()
         //defaults.removeObject(forKey: "jsonweboken")
         
@@ -24,7 +23,6 @@ class AuthViewModel: ObservableObject {
              
             if let userId = defaults.object(forKey: "userid") as? String {
                 fetchUser(userId: userId)
-                print("User fetched")
             }
         } else {
             isAuthenticated = false
@@ -39,7 +37,6 @@ class AuthViewModel: ObservableObject {
         let defaults = UserDefaults.standard
         
         AuthServices.login(email: email, password: password) { result in
-            print("login func")
             switch result {
                 case .success(let data):
                     if let data = data {
@@ -95,7 +92,7 @@ class AuthViewModel: ObservableObject {
                         UserDefaults.standard.setValue(user.id, forKey: "userid")
                         self.isAuthenticated = true
                         self.currentUser = user
-                        print(user)
+                        //print(user)
                     }
                     
                 case .failure(let error):

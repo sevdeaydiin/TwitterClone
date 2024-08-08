@@ -103,25 +103,19 @@ public class AuthServices {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         
         let task = session.dataTask(with: urlRequest) { data, res, err in
+            if let err = err {
+                completion(.failure(.custom(errorMessage: err.localizedDescription)))
+                return
+            }
             
-            guard let err = err else { return }
-            
-            guard let data = data else { return completion(.failure(.invalidCredentials)) }
+            guard let data = data else {
+                completion(.failure(.custom(errorMessage: "no data")))
+                return
+            }
             
             completion(.success(data))
-            
-            do {
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    
-                }
-            }
-            catch let error {
-                completion(.failure(.invalidCredentials))
-                print(error)
-            }
         }
-        
         task.resume()
-        
     }
+    
 }

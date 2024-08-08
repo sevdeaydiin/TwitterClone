@@ -12,6 +12,7 @@ struct SlideMenu: View {
     @State var show = true
     var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
+    @EnvironmentObject var viewModel: AuthViewModel //
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -62,7 +63,7 @@ struct SlideMenu: View {
                     .padding(.top)
                 
                 Button {
-                    
+                    viewModel.logout()
                 } label: {
                     MenuButton(title: "Twitter Ads")
                 }
