@@ -35,11 +35,9 @@ struct Home: View {
                            
                         }
                         .tabItem {
-                            
                                 Image("Search")
                                     .renderingMode(.template)
                                     .foregroundStyle(Color.bg)
-                            
                         }
                         .tag(1)
                     
@@ -49,7 +47,6 @@ struct Home: View {
                             
                         }
                         .tabItem {
-                            
                                 Image("Notifications")
                                     .renderingMode(.template)
                                     .foregroundStyle(Color.bg)
@@ -64,7 +61,6 @@ struct Home: View {
                            
                         }
                         .tabItem {
-                            
                                 Image("Messages")
                                     .renderingMode(.template)
                                     .foregroundStyle(Color.bg)
@@ -72,6 +68,7 @@ struct Home: View {
                         }
                         .tag(3)
                 }
+                .padding(.bottom, 15)
                 
                 VStack {
                     Spacer()
@@ -82,7 +79,7 @@ struct Home: View {
                             Button {
                                 self.showCreateTweet.toggle()
                             } label: {
-                                Image(systemName: "plus.message.fill")
+                                Image(systemName: "plus")
                                     .fontWeight(.bold)
                                     .foregroundStyle(.white)
                                     //.renderingMode(.template)
@@ -112,7 +109,7 @@ struct Home: View {
                         }*/
                         
                     }.padding()
-                }.padding(.bottom, 50)
+                }.padding(.bottom, Sizes.height * 0.11)
             }
         }.sheet(isPresented: $showCreateTweet, content: {
             CreateTweetView(show: $showCreateTweet)

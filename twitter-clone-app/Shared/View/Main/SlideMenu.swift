@@ -7,30 +7,41 @@
 
 import SwiftUI
 
+var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
+
 struct SlideMenu: View {
     
+    @ObservedObject var viewModel: AuthViewModel
+    @Binding var isUserProfileActive: Bool
     @State var show = true
-    var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
-    @EnvironmentObject var viewModel: AuthViewModel //
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             HStack(spacing: 0) {
                 VStack(alignment: .leading) {
-                    Image("logo")
-                        .resizable()
-                        .frame(width: 60, height: 60, alignment: .center)
-                        .clipShape(Circle())
                     
+                    Button {
+                        isUserProfileActive = true
+                    } label: {
+                        Image("logo")
+                            .resizable()
+                            .frame(width: 60, height: 60, alignment: .center)
+                            .clipShape(Circle())
+                    }
+
                     HStack(alignment: .top, spacing: 12) {
                         VStack(alignment: .leading) {
-                            Text("Sevde")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.black)
-                            
-                            Text("@sevdeaydiin")
+                            Button {
+                                isUserProfileActive = true
+                            } label: {
+                                Text(viewModel.currentUser?.name ?? "Name")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.black)
+                            }
+                            Text("@\(viewModel.currentUser!.username)")
                                 .foregroundStyle(.gray)
                             
                             HStack(spacing: 20) {
@@ -50,11 +61,16 @@ struct SlideMenu: View {
                 } label: {
                     Image(systemName: show ? "chevron.down" : "chevron.up")
                         .foregroundStyle(.bg)
-                    
                 }
             }
             
             VStack(alignment: .leading) {
+                Button {
+                    isUserProfileActive = true
+                } label: {
+                    MenuButton(title: "Profile")
+                }
+                
                 ForEach(menuButtons, id: \.self) { item in
                     MenuButton(title: item)
                 }
@@ -131,9 +147,6 @@ struct SlideMenu: View {
             .opacity(!show ? 1 : 0)
             .frame(height: !show ? nil : 0)
             .padding(.top, 10)
-            
-            
-            
         }
         .padding(.horizontal, 20)
         .padding(.top, edges!.top == 0 ? 15 : edges?.top)
@@ -145,6 +158,3 @@ struct SlideMenu: View {
     }
 }
 
-#Preview {
-    SlideMenu()
-}

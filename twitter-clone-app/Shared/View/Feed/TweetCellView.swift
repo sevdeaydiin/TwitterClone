@@ -25,8 +25,8 @@ struct TweetCellView: View {
                     .frame(width: 55, height: 55)
                     .clipShape(Circle())
                     
-                VStack (alignment: .leading, spacing: 10) {
-                    Text("\(self.viewModel.tweet.username)")
+                VStack (alignment: .leading, spacing: 6) {
+                    Text("\(self.viewModel.tweet.username) ")
                         .fontWeight(.bold)
                         .foregroundStyle(.primary)
                     +
@@ -34,7 +34,7 @@ struct TweetCellView: View {
                         .foregroundStyle(.gray)
                     
                     Text(self.viewModel.tweet.text)
-                        .frame(maxHeight: 100, alignment: .top)
+                        .frame(maxWidth: .infinity, maxHeight: 100, alignment: .leading)
                     
                     /*if let image = tweetImage {
                         GeometryReader { proxy in
@@ -74,17 +74,31 @@ struct TweetCellView: View {
                         .frame(width: 18, height: 15)
                 }.foregroundStyle(.gray)
                 
-                Button {
+                HStack(spacing: 20) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "bookmark")
+                            .resizable()
+                            .frame(width: 18, height: 14)
+                    }.foregroundStyle(.gray)
                     
-                } label: {
-                     Image("upload")
-                        .resizable()
-                        .frame(width: 18, height: 15)
-                }.foregroundStyle(.gray)
-            }.padding(.top, 4)
+                    Button {
+                        
+                    } label: {
+                         Image("upload")
+                            .resizable()
+                            .frame(width: 18, height: 15)
+                    }.foregroundStyle(.gray)
+                }
+            }
+            .padding(.top, 4)
+            .padding(.leading, 15)
         }
+        .frame(maxWidth: .infinity)
         .padding(.horizontal, 10)
-        .padding(.top, 15)
+        //.padding(.leading, 10)
+        //.padding(.top, 15)
     }
 }
 

@@ -15,6 +15,8 @@ struct UserProfile: View {
     @State var tabBarOffset: CGFloat = 0
     @Namespace var animation
     
+    let user: User
+    
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
@@ -41,7 +43,7 @@ struct UserProfile: View {
                                     .opacity(blurViewOpacity())
                                 
                                 VStack(spacing: 5) {
-                                    Text("sevde")
+                                    Text(self.user.name)
                                         .fontWeight(.bold)
                                         .foregroundStyle(.white)
                                     
@@ -76,24 +78,30 @@ struct UserProfile: View {
                                 
                             } label: {
                                  Text("Edit Profile")
-                                    .foregroundStyle(.blue)
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(.black)
                                     .padding(.vertical, 10)
-                                    .padding(.horizontal)
-                                    .background(Capsule().stroke(Color.blue, lineWidth: 1.5))
+                                    .padding(.horizontal, 5)
+                                    .background(Capsule().stroke(Color.gray, lineWidth: 1.5))
                             }
+                            .padding(.trailing, 5)
                         }
                         .padding(.top, -25)
                         .padding(.bottom, -10)
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("sevde")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.primary)
-                                .font(.system(size: width * 0.06)) // Dynamic font size
                             
-                            Text("@sevde")
-                                .foregroundStyle(.gray)
+                            VStack (alignment: .leading, spacing: 3){
+                                Text(user.name)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.primary)
+                                    .font(.system(size: width * 0.06)) // Dynamic font size
+                                
+                                Text("@\(user.username)")
+                                    .foregroundStyle(.gray)
+                            }
                             
                             Text("gırgır samata hjkshjs shjhashaj bsaj ah ahsajhhsah")
                             
@@ -186,6 +194,3 @@ struct UserProfile: View {
     }
 }
 
-#Preview {
-    UserProfile()
-}
