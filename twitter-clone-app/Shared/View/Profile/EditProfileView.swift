@@ -45,7 +45,7 @@ struct EditProfileView: View {
                     }
                     Spacer()
                     Button {
-                        self.viewModel.save(name: name, bio: bio, website: website, location: location)
+                        self.viewModel.uploadUserData(name: name, bio: bio, website: website, location: location)
                     } label: {
                         Text("Save")
                             .foregroundStyle(.black)
@@ -149,7 +149,9 @@ struct EditProfileView: View {
                     }
                 }
                 .padding(.horizontal)
+                
                 Divider()
+                
                 HStack {
                     ZStack(alignment: .topLeading) {
                         HStack {
@@ -159,12 +161,16 @@ struct EditProfileView: View {
                             Spacer()
                         }
                         CustomProfileTextField(message: $bio, placeholder: "Add your bio")
-                            .frame(maxHeight: 100, alignment: .top)
-                            .padding(.leading, 90)
+                            //.frame(maxHeight: 100, alignment: .top)
+                            //.padding(.leading, 90)
+                            .padding(.leading, 86)
+                            .padding(.top, 6)
                     }
                 }
                 .padding(.horizontal)
+                
                 Divider()
+                
                 HStack {
                     ZStack {
                         HStack {
@@ -180,6 +186,16 @@ struct EditProfileView: View {
                 .padding(.horizontal)
             }
             Spacer()
+        }
+        .onReceive(viewModel.$uploadComplete) { complete in
+            if complete {
+                self.dismiss()
+                self.user.name = viewModel.user.name
+                self.user.website = viewModel.user.website
+                self.user.bio = viewModel.user.bio
+                self.user.location = viewModel.user.location
+                
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ public class RequestServices {
     static func fetchTweets(completion: @escaping (_ result: Result<Data?, NetworkError>) -> Void) {
         
         let url = URL(string: requestDomain)!
-        print(url)
+        //print(url)
         
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 120.0

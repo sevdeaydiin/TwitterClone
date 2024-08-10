@@ -122,7 +122,7 @@ struct UserProfile: View {
                                 .foregroundStyle(.gray)
                         }
                         
-                        Text("gırgır samata hjkshjs shjhashaj bsaj")
+                        Text(user.bio ?? "bio")
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         HStack(spacing: 5) {
@@ -163,7 +163,7 @@ struct UserProfile: View {
                         }
                         Divider()
                     }
-                    .padding(.top, -40)
+                    .padding(.top, -45)
                     .background(Color.white)
                     .offset(y: tabBarOffset < 90 ? -tabBarOffset + 90 : 90)
                     .overlay(
