@@ -161,10 +161,10 @@ struct EditProfileView: View {
                             Spacer()
                         }
                         CustomProfileTextField(message: $bio, placeholder: "Add your bio")
-                            //.frame(maxHeight: 100, alignment: .top)
-                            //.padding(.leading, 90)
-                            .padding(.leading, 86)
-                            .padding(.top, 6)
+                            .frame(maxHeight: 100, alignment: .top)
+                            .padding(.leading, 90)
+                            //.padding(.leading, 86)
+                            //.padding(.top, 6)
                     }
                 }
                 .padding(.horizontal)

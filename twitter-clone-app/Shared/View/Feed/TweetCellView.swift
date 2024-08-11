@@ -13,7 +13,7 @@ struct TweetCellView: View {
     
     init(viewModel: TweetCellViewModel) {
         self.viewModel = viewModel
-        print("cell view: \(viewModel.tweet)")
+        //print("cell view: \(viewModel.tweet)")
     }
     
     var body: some View {

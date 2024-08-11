@@ -129,34 +129,46 @@ public class AuthServices {
             request.httpBody = try JSONSerialization.data(withJSONObject: reqBody, options: .prettyPrinted)
         }
         catch let error {
-            print(error)
+            print("Error serializing JSON:", error)
+                    completion(.failure(.decodingError))
+                    return
         }
         
-        let token = UserDefaults.standard.string(forKey: "jsonwebtoken")
+        guard let token = UserDefaults.standard.string(forKey: "jsonwebtoken") else {
+            print("No token found")
+            completion(.failure(.noData))
+            return
+        }
         
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
+
         let task = session.dataTask(with: request) { data, res, err in
-            guard err == nil else {
-                print("else")
+            if let err = err {
+                print("Request error:", err.localizedDescription)
+                completion(.failure(.decodingError))
                 return
             }
             guard let data = data else {
+                print("No data returned")
                 completion(.failure(.noData))
                 return
             }
-            
-            completion(.success(data))
-            
+
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    
+                    print("Response JSON:", json)
+                    if let errorMessage = json["error"] as? String {
+                        completion(.failure(.decodingError))
+                        print("Error from server:", errorMessage)
+                        return
+                    }
                 }
+                completion(.success(data))
             } catch let error {
                 completion(.failure(.decodingError))
-                print(error)
+                print("Decoding error:", error.localizedDescription)
             }
         }
         task.resume()

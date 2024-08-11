@@ -22,7 +22,10 @@ struct ImageUploader {
         urlRequest.httpMethod = "POST"
         
         // authentication
-        guard let token = UserDefaults.standard.string(forKey: "jsonwebtoken") else { return }
+        guard let token = UserDefaults.standard.string(forKey: "jsonwebtoken") else {
+            print("No token found")
+            return
+        }
         
         urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         urlRequest.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")

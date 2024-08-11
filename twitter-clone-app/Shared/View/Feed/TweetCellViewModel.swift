@@ -13,6 +13,6 @@ class TweetCellViewModel: ObservableObject {
     
     init(tweet: Tweet) {
         self.tweet = tweet
-        print("viewmodel: \(tweet)")
+        //print("viewmodel: \(tweet)")
     }
 }

@@ -24,11 +24,11 @@ class FeedViewModel: ObservableObject {
             case .success(let data):
                 do {
                     let jsonString = String(data: data!, encoding: .utf8)
-                    print("Response JSON: \(jsonString ?? "")")
+                    //print("Response JSON: \(jsonString ?? "")")
                     let tweets = try JSONDecoder().decode([Tweet].self, from: data!)
                     DispatchQueue.main.async {
                         self.tweets = tweets
-                        print(tweets)
+                        //print(tweets)
                     }
                 } catch {
                     print("JSON decode error: \(error)")

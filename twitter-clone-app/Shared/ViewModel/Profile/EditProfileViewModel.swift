@@ -39,7 +39,7 @@ class EditProfileViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.save(name: name, bio: bio, website: website, location: location)
                 self.uploadComplete = true
-                print(location)
+                print(location as Any)
             }
         }
     }

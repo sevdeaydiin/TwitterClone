@@ -81,7 +81,7 @@ struct UserProfile: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 75, height: 75)
                             .clipShape(Circle())
-                            .padding(8)
+                            .padding(5)
                             .background(Color.white.clipShape(Circle()))
                             .offset(y: offset < 0 ? getOffset() - 20 : -20)
                             .scaleEffect(getScale())
@@ -122,8 +122,10 @@ struct UserProfile: View {
                                 .foregroundStyle(.gray)
                         }
                         
-                        Text(user.bio ?? "bio")
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if let bio = user.bio {
+                            Text(bio)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         
                         HStack(spacing: 5) {
                             Text("13")
@@ -140,6 +142,7 @@ struct UserProfile: View {
                         }
                         .padding(.top, 8)
                     })
+                    .frame(alignment: .leading)
                     .overlay {
                         GeometryReader { proxy -> Color in
                             let minY = proxy.frame(in: .global).minY
@@ -163,7 +166,7 @@ struct UserProfile: View {
                         }
                         Divider()
                     }
-                    .padding(.top, -45)
+                    .padding(.top, -55)
                     .background(Color.white)
                     .offset(y: tabBarOffset < 90 ? -tabBarOffset + 90 : 90)
                     .overlay(
