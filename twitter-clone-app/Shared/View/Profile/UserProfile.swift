@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct UserProfile: View {
     
@@ -76,7 +77,14 @@ struct UserProfile: View {
                 
                 VStack {
                     HStack {
-                        Image("logo")
+                        KFImage(URL(string: "http://localhost:3000/users/\(self.viewModel.user.id)/avatar"))
+                            .placeholder({
+                                Image("Profile")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 75, height: 75)
+                                    .clipShape(Circle())
+                            })
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 75, height: 75)
@@ -109,50 +117,53 @@ struct UserProfile: View {
                     .padding(.top, -25)
                     .padding(.bottom, -10)
                     
-                    VStack(alignment: .leading, spacing: 8, content: {
-                        
-                        VStack (alignment: .leading, spacing: 3){
-                            Text(user.name)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.primary)
-                                .font(.system(size: Sizes.width * 0.06)) // Dynamic font size
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8, content: {
                             
-                            Text("@\(user.username)")
-                                .foregroundStyle(.gray)
-                        }
-                        
-                        if let bio = user.bio {
-                            Text(bio)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        HStack(spacing: 5) {
-                            Text("13")
-                                .foregroundStyle(.primary)
-                                .fontWeight(.semibold)
-                            Text("Followers")
-                                .foregroundStyle(.gray)
-                            Text("60")
-                                .foregroundStyle(.primary)
-                                .fontWeight(.semibold)
-                                .padding(.leading, 10)
-                            Text("Following")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.top, 8)
-                    })
-                    .frame(alignment: .leading)
-                    .overlay {
-                        GeometryReader { proxy -> Color in
-                            let minY = proxy.frame(in: .global).minY
-                            
-                            DispatchQueue.main.async {
-                                self.titleOffset = minY
+                            VStack (alignment: .leading, spacing: 3){
+                                Text(self.viewModel.user.name)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(.primary)
+                                    .font(.system(size: Sizes.width * 0.06)) // Dynamic font size
+                                
+                                Text("@\(self.viewModel.user.username)")
+                                    .foregroundStyle(.gray)
                             }
-                            return Color.clear
+                            
+                            if let bio = user.bio {
+                                Text(bio)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            
+                            HStack(spacing: 5) {
+                                Text("13")
+                                    .foregroundStyle(.primary)
+                                    .fontWeight(.semibold)
+                                Text("Followers")
+                                    .foregroundStyle(.gray)
+                                Text("60")
+                                    .foregroundStyle(.primary)
+                                    .fontWeight(.semibold)
+                                    .padding(.leading, 10)
+                                Text("Following")
+                                    .foregroundStyle(.gray)
+                            }
+                            .padding(.top, 8)
+                        })
+                        .padding(.leading, 8)
+                        .overlay {
+                            GeometryReader { proxy -> Color in
+                                let minY = proxy.frame(in: .global).minY
+                                
+                                DispatchQueue.main.async {
+                                    self.titleOffset = minY
+                                }
+                                return Color.clear
+                            }
+                            .frame(width: 0, height: 0, alignment: .top)
+                            Spacer()
                         }
-                        .frame(width: 0, height: 0, alignment: .top)
                     }
                     
                     VStack(spacing: 0) {

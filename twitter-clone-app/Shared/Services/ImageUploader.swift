@@ -50,10 +50,11 @@ struct ImageUploader {
             }
             
             do {
-                let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .fragmentsAllowed)
-                
-                if let json = jsonData as? [String: Any] {
-                    print(json)
+                // Parse JSON response
+                if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
+                    print("Response JSON: \(json)")
+                } else {
+                    print("Invalid JSON response")
                 }
             } catch {
                 print("Error parsing response data: \(error.localizedDescription)")
@@ -61,3 +62,4 @@ struct ImageUploader {
         }.resume()
     }
 }
+
