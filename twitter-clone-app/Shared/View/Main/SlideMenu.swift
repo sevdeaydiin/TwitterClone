@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 var menuButtons = ["Profile", "Lists", "Topics", "Bookmarks", "Moments"]
 
 struct SlideMenu: View {
     
     @ObservedObject var viewModel: AuthViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
     @Binding var isUserProfileActive: Bool
     @State var show = true
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
@@ -25,7 +27,14 @@ struct SlideMenu: View {
                     Button {
                         isUserProfileActive = true
                     } label: {
-                        Image("logo")
+                        KFImage(URL(string: "http://localhost:3000/users/\(self.profileViewModel.user.id)/avatar"))
+                            .placeholder({
+                                Image("pp")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 75, height: 75)
+                                    .clipShape(Circle())
+                            })
                             .resizable()
                             .frame(width: 60, height: 60, alignment: .center)
                             .clipShape(Circle())

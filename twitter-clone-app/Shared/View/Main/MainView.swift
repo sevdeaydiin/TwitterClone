@@ -26,7 +26,7 @@ struct MainView: View {
                 )
                 .offset(x: x == 0 ? width : 0)
                 
-                SlideMenu(viewModel: AuthViewModel.shared, isUserProfileActive: $isUserProfileActive)
+                SlideMenu(viewModel: AuthViewModel.shared, profileViewModel: ProfileViewModel.init(user: user), isUserProfileActive: $isUserProfileActive)
                     .shadow(color: .black.opacity(x != 0 ? 0.1 : 0), radius: 5, x: 5, y: 0)
                     .offset(x: x)
                     .ignoresSafeArea(.all, edges: .vertical)

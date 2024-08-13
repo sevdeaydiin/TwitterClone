@@ -21,7 +21,7 @@ struct CreateTweetView: View {
             HStack {
                 Button {
                     self.show.toggle()
-                }label: {
+                } label: {
                     Text("Cancel")
                 }
                 
@@ -32,17 +32,16 @@ struct CreateTweetView: View {
                         self.viewModel.uploadPost(text: text, image: selectedImage)
                         self.show.toggle()
                     }
-                }label: {
+                } label: {
                     Text("Tweet")
                         .padding()
                 }
-                .background(Color.bg)
-                .foregroundStyle(.white)
+                .background(Color.blue)
+                .foregroundColor(.white)
                 .clipShape(Capsule())
             }
             
             MultilineTextField(text: $text)
-            //TextField("What's happening?", text: $text)
 
             if postImage == nil {
                 Button {
@@ -54,21 +53,19 @@ struct CreateTweetView: View {
                         .frame(width: 70, height: 70)
                         .clipped()
                         .padding(.top)
-                        .foregroundStyle(.black)
+                        .foregroundColor(.black)
                 }.sheet(isPresented: $imagePickerPresented) {
                     loadImage()
                 } content: {
                     ImagePicker(image: $selectedImage)
                 }
-            }
-            
-            else if let image = postImage {
+                
+            } else if let image = postImage {
                 VStack {
                     HStack(alignment: .top) {
                         image
                             .resizable()
                             .scaledToFill()
-                            .padding(.horizontal)
                             .frame(width: Sizes.width * 0.9)
                             .cornerRadius(16)
                             .clipped()
@@ -88,3 +85,4 @@ extension CreateTweetView {
         postImage = Image(uiImage: selectedImage)
     }
 }
+

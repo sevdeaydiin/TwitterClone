@@ -79,7 +79,7 @@ struct UserProfile: View {
                     HStack {
                         KFImage(URL(string: "http://localhost:3000/users/\(self.viewModel.user.id)/avatar"))
                             .placeholder({
-                                Image("Profile")
+                                Image("pp")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 75, height: 75)
@@ -118,7 +118,7 @@ struct UserProfile: View {
                     .padding(.bottom, -10)
                     
                     HStack {
-                        VStack(alignment: .leading, spacing: 8, content: {
+                        VStack(alignment: .leading, spacing: 3, content: {
                             
                             VStack (alignment: .leading, spacing: 3){
                                 Text(self.viewModel.user.name)
@@ -130,11 +130,51 @@ struct UserProfile: View {
                                 Text("@\(self.viewModel.user.username)")
                                     .foregroundStyle(.gray)
                             }
+                            //if let bio = user.bio {
+                            //    Text(bio)
+                            //        .frame(maxWidth: .infinity, alignment: .leading)
+                            //}
                             
-                            if let bio = user.bio {
-                                Text(bio)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
+                            HStack(spacing: 8) {
+                                if let userBio = viewModel.user.bio {
+                                    if (userBio != "") {
+                                            Text(userBio)
+                                                .foregroundStyle(.gray)
+                                                .font(.system(size: 14))
+                                        }
+                                    }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+
+                            
+                            HStack(spacing: 8) {
+                                if let userLocation = viewModel.user.location {
+                                    if (userLocation != "") {
+                                        HStack(spacing: 2) {
+                                            Image(systemName: "mappin.and.ellipse")
+                                                .frame(width: 24, height: 24)
+                                                .foregroundStyle(.gray)
+                                            Text(userLocation)
+                                                .foregroundStyle(.gray)
+                                                .font(.system(size: 14))
+                                        }
+                                    }
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            HStack(spacing: 8) {
+                                if let userWebsite = viewModel.user.website {
+                                    if (userWebsite != "") {
+                                        HStack(spacing: 2) {
+                                            Image(systemName: "link")
+                                                .frame(width: 24, height: 24)
+                                                .foregroundStyle(.gray)
+                                            Text(userWebsite)
+                                                .foregroundStyle(.gray)
+                                                .font(.system(size: 14))
+                                        }
+                                    }
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
                             
                             HStack(spacing: 5) {
                                 Text("13")
@@ -149,9 +189,9 @@ struct UserProfile: View {
                                 Text("Following")
                                     .foregroundStyle(.gray)
                             }
-                            .padding(.top, 8)
+                            .padding(.top, 5)
                         })
-                        .padding(.leading, 8)
+                        .padding(.leading, 5)
                         .overlay {
                             GeometryReader { proxy -> Color in
                                 let minY = proxy.frame(in: .global).minY
@@ -165,6 +205,7 @@ struct UserProfile: View {
                             Spacer()
                         }
                     }
+                    //.frame(alignment: .leading)
                     
                     VStack(spacing: 0) {
                         ScrollView(.horizontal, showsIndicators: false) {
