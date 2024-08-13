@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-struct Tweet: Identifiable, Decodable {
+struct ImageData: Decodable {
+    let type: String
+    let data: [UInt8]
+}
 
+struct Tweet: Identifiable, Decodable {
     let _id: String
     var id: String {
         return _id
@@ -17,5 +21,6 @@ struct Tweet: Identifiable, Decodable {
     let userId: String
     let username: String
     let user: String
-    let image: String?
+    let image: ImageData?
 }
+

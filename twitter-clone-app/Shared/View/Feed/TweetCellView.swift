@@ -6,26 +6,25 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TweetCellView: View {
-           
     @ObservedObject var viewModel: TweetCellViewModel
     
     init(viewModel: TweetCellViewModel) {
         self.viewModel = viewModel
-        //print("cell view: \(viewModel.tweet)")
     }
     
     var body: some View {
         VStack {
-            HStack (alignment: .top, spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
                 Image("logo")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 55, height: 55)
                     .clipShape(Circle())
-                    
-                VStack (alignment: .leading, spacing: 6) {
+                
+                VStack(alignment: .leading, spacing: 6) {
                     Text("\(self.viewModel.tweet.username) ")
                         .fontWeight(.bold)
                         .foregroundStyle(.primary)
@@ -34,26 +33,28 @@ struct TweetCellView: View {
                         .foregroundStyle(.gray)
                     
                     Text(self.viewModel.tweet.text)
-                        .frame(maxWidth: .infinity, maxHeight: 100, alignment: .leading)
+                        .frame(maxHeight: 100, alignment: .top)
                     
-                    /*if let image = tweetImage {
-                        GeometryReader { proxy in
-                            Image(image)
+                    if let imageData = viewModel.tweet.image?.data {
+                        if let uiImage = UIImage(data: Data(imageData)) {
+                            KFImage(source: .provider(KFImageProvider(image: uiImage)))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: proxy.frame(in: .global).width, height: 250)
+                                .frame(height: 250)
                                 .cornerRadius(15)
-                        }.frame(height: 250)
-                    }*/
+                        }
+                    }
+
                 }
+                Spacer()
             }
             
             // Cell bottom
-            HStack (spacing: 50) {
+            HStack(spacing: 50) {
                 Button {
                     
                 } label: {
-                     Image("Comments")
+                    Image("Comments")
                         .resizable()
                         .frame(width: 16, height: 16)
                 }.foregroundStyle(.gray)
@@ -69,7 +70,7 @@ struct TweetCellView: View {
                 Button {
                     
                 } label: {
-                     Image(systemName: "heart")
+                    Image(systemName: "heart")
                         .resizable()
                         .frame(width: 18, height: 15)
                 }.foregroundStyle(.gray)
@@ -86,7 +87,7 @@ struct TweetCellView: View {
                     Button {
                         
                     } label: {
-                         Image("upload")
+                        Image("upload")
                             .resizable()
                             .frame(width: 18, height: 15)
                     }.foregroundStyle(.gray)
@@ -97,8 +98,6 @@ struct TweetCellView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 10)
-        //.padding(.leading, 10)
-        //.padding(.top, 15)
     }
 }
 

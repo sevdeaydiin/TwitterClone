@@ -17,6 +17,7 @@ public class RequestServices {
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
+        
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
         } catch let error {
@@ -25,7 +26,7 @@ public class RequestServices {
         
         // authentication part in the http request
         let token = UserDefaults.standard.string(forKey: "jsonwebtoken")!
-        request.addValue("Bearer \(String(describing: token))", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
@@ -49,10 +50,10 @@ public class RequestServices {
         let url = URL(string: requestDomain)!
         //print(url)
         
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 120.0
-        sessionConfig.timeoutIntervalForResource = 120.0
-        let session = URLSession(configuration: sessionConfig)
+        //let sessionConfig = URLSessionConfiguration.default
+        //sessionConfig.timeoutIntervalForRequest = 120.0
+        //sessionConfig.timeoutIntervalForResource = 120.0
+        let session = URLSession.shared
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"

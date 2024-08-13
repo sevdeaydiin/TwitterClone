@@ -15,9 +15,10 @@ struct ImageUploader {
         guard let url = URL(string: "http://localhost:3000\(urlPath)") else { return }
         
         let boundary = UUID().uuidString
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 120
-        let session = URLSession(configuration: sessionConfig)
+        //let sessionConfig = URLSessionConfiguration.default
+        //sessionConfig.timeoutIntervalForRequest = 120
+        //let session = URLSession(configuration: sessionConfig)
+        let session = URLSession.shared
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         
