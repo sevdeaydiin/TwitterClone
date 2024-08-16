@@ -15,6 +15,7 @@ class ProfileViewModel: ObservableObject {
     init(user: User) {
         self.user = user
         fetchTweets()
+        checkIsCurrentUser()
     }
     
     func fetchTweets() {
@@ -32,4 +33,12 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
+    
+    // Check If User Is Current User
+    func checkIsCurrentUser() {
+        if(self.user._id == AuthViewModel.shared.currentUser?._id) {
+            self.user.isCurrentUser = true
+        }
+    }
+    
 }

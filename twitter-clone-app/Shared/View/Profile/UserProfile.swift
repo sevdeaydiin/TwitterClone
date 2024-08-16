@@ -18,10 +18,12 @@ struct UserProfile: View {
     
     @Namespace var animation
     
-    @Environment(\.colorScheme) var colorScheme
-    
     let user: User
     @ObservedObject var viewModel: ProfileViewModel
+    
+    var isCurrentUser: Bool {
+        return viewModel.user.isCurrentUser ?? false
+    }
     
     init(user: User) {
         self.user = user
@@ -96,24 +98,43 @@ struct UserProfile: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            self.editProfileShow.toggle()
-                        }, label: {
-                            Text("Edit Profile")
-                                .font(.caption)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.black)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 5)
-                                .background(Capsule().stroke(Color.gray, lineWidth: 1.5))
-                        })
-                        .sheet(isPresented: $editProfileShow) {
-                        
-                         } content: {
-                             EditProfileView(user: $viewModel.user)
+                        if(self.isCurrentUser) {
+                            Button(action: {
+                                self.editProfileShow.toggle()
+                            }, label: {
+                                Text("Edit Profile")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(.black)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 5)
+                                    .background(Capsule().stroke(Color.gray, lineWidth: 1.5))
+                            })
+                            .sheet(isPresented: $editProfileShow) {
+                             } content: {
+                                 EditProfileView(user: $viewModel.user)
+                            }
+                        } else {
+                            Button(action: {
+                                
+                            }, label: {
+                                Text("Follow")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(.white)
+                                    .padding(.vertical, 12)
+                                    .padding(.horizontal, 10)
+                                    .background(
+                                        Capsule()
+                                            //.stroke(Color.black, lineWidth: 1.5)
+                                            .foregroundStyle(.black)
+                                        
+                                    )
+                            })
                         }
                         
                     }
+                    .padding(.horizontal)
                     .padding(.top, -25)
                     .padding(.bottom, -10)
                     
@@ -145,7 +166,6 @@ struct UserProfile: View {
                                     }
                             }.frame(maxWidth: .infinity, alignment: .leading)
 
-                            
                             HStack(spacing: 8) {
                                 if let userLocation = viewModel.user.location {
                                     if (userLocation != "") {
@@ -205,20 +225,23 @@ struct UserProfile: View {
                             Spacer()
                         }
                     }
+                    .padding(.horizontal, 5)
                     //.frame(alignment: .leading)
                     
+                    // tweets - media - likes
                     VStack(spacing: 0) {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 0) {
                                 TabButton(title: "Tweets", currentTab: $currentTab, animation: animation)
-                                TabButton(title: "Tweets & Likes", currentTab: $currentTab, animation: animation)
+                                TabButton(title: "Replies", currentTab: $currentTab, animation: animation)
                                 TabButton(title: "Media", currentTab: $currentTab, animation: animation)
                                 TabButton(title: "Likes", currentTab: $currentTab, animation: animation)
                             }
                         }
+                        
                         Divider()
                     }
-                    .padding(.top, -55)
+                    .padding(.top, -65)
                     .background(Color.white)
                     .offset(y: tabBarOffset < 90 ? -tabBarOffset + 90 : 90)
                     .overlay(
@@ -235,16 +258,17 @@ struct UserProfile: View {
                     )
                     .zIndex(1)
                     
+                    // tweet
                     VStack(spacing: 18) {
-                        Spacer()
+                        ForEach(viewModel.tweets) { tweet in
+                            TweetCellView(viewModel: TweetCellViewModel(tweet: tweet))
+                        }
                     }
-                    .padding(.top)
+                    .padding(.top, 60)
                     .zIndex(0)
-                    
                 }
-                .padding(.horizontal)
+                //.padding(.horizontal)
                 .zIndex(-offset > 80 ? 0 : 1)
-                
             }
         })
         .ignoresSafeArea(.all, edges: .top)
