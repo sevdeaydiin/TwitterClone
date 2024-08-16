@@ -25,6 +25,10 @@ struct UserProfile: View {
         return viewModel.user.isCurrentUser ?? false
     }
     
+    var isFollowed: Bool {
+        return viewModel.user.isFollow ?? false
+    }
+    
     init(user: User) {
         self.user = user
         self.viewModel = ProfileViewModel(user: user)
@@ -69,7 +73,7 @@ struct UserProfile: View {
                             .clipped()
                             .frame(height: minY > 0 ? 180 + minY : nil)
                             .offset(y: minY > 0 ? -minY : -minY < 80 ? 0 : -minY - 80)
-                            .onChange(of: minY) { newValue in
+                            .onChange(of: minY) { oldValue, newValue in
                                 self.offset = newValue
                             }
                         //}
@@ -116,18 +120,25 @@ struct UserProfile: View {
                             }
                         } else {
                             Button(action: {
-                                self.viewModel.follow()
+                                isFollowed ? self.viewModel.unfollow() : self.viewModel.follow()
                             }, label: {
-                                Text("Follow")
+                                Text(isFollowed ? "Following" : "Follow")
                                     .font(.caption)
                                     .fontWeight(.medium)
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(isFollowed ? .black : .white)
                                     .padding(.vertical, 12)
                                     .padding(.horizontal, 10)
                                     .background(
-                                        Capsule()
-                                            //.stroke(Color.black, lineWidth: 1.5)
-                                            .foregroundStyle(.black)
+                                        
+                                        ZStack {
+                                            Capsule()
+                                                .stroke(Color.black, lineWidth: isFollowed ? 1.5 : 0)
+                                                .foregroundStyle(isFollowed ? .white : .black)
+                                            
+                                            Capsule()
+                                                .foregroundStyle(isFollowed ? .white : .black)
+                                        }
+                                        
                                         
                                     )
                             })
