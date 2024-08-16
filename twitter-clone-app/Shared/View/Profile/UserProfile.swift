@@ -116,7 +116,7 @@ struct UserProfile: View {
                             }
                         } else {
                             Button(action: {
-                                
+                                self.viewModel.follow()
                             }, label: {
                                 Text("Follow")
                                     .font(.caption)

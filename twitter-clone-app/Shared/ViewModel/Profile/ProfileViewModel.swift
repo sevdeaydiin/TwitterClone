@@ -20,7 +20,7 @@ class ProfileViewModel: ObservableObject {
     
     func fetchTweets() {
         RequestServices.requestDomain = "\(NetworkConstants.baseURL)tweets/\(self.user.id)"
-
+        
         RequestServices.fetchTweets { result in
             switch result {
             case .success(let data):
@@ -38,6 +38,22 @@ class ProfileViewModel: ObservableObject {
     func checkIsCurrentUser() {
         if(self.user._id == AuthViewModel.shared.currentUser?._id) {
             self.user.isCurrentUser = true
+        }
+    }
+    
+    func follow() {
+        RequestServices.requestDomain = "\(NetworkConstants.baseURL)users/\(self.user.id)/follow"
+        
+        RequestServices.followingProcess(id: self.user.id) { result in
+            
+        }
+    }
+    
+    func unfollow() {
+        RequestServices.requestDomain = "\(NetworkConstants.baseURL)users/\(self.user.id)/unfollow"
+        
+        RequestServices.followingProcess(id: self.user.id) { result in
+            
         }
     }
     
