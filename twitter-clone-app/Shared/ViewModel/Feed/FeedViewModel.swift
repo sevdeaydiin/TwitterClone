@@ -8,27 +8,21 @@
 import Foundation
 
 class FeedViewModel: ObservableObject {
-    
     @Published var tweets = [Tweet]()
     
-    init(){
+    init() {
         fetchTweets()
     }
     
     func fetchTweets() {
-        
         RequestServices.requestDomain = "http://localhost:3000/tweets"
-        //"\(NetworkConstants.baseURL)tweets"
-        RequestServices.fetchTweets { res in
-            switch res {
+        RequestServices.fetchTweets { result in
+            switch result {
             case .success(let data):
                 do {
-                    let jsonString = String(data: data!, encoding: .utf8)
-                    //print("Response JSON: \(jsonString ?? "")")
                     let tweets = try JSONDecoder().decode([Tweet].self, from: data!)
                     DispatchQueue.main.async {
                         self.tweets = tweets
-                        //print(tweets)
                     }
                 } catch {
                     print("JSON decode error: \(error)")
@@ -39,3 +33,4 @@ class FeedViewModel: ObservableObject {
         }
     }
 }
+

@@ -81,7 +81,7 @@ struct EditProfileView: View {
                         KFImage(URL(string: "http://localhost:3000/users/\(self.viewModel.user.id)/avatar"))
                             .resizable()
                             .placeholder {
-                                Image("Profile")
+                                Image("pp")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 75, height: 75)

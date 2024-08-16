@@ -34,6 +34,7 @@ struct TabButton: View {
                         .frame(height: 1.2)
                 }
             }
+            .frame(maxWidth: .infinity)
         }
     }
 }

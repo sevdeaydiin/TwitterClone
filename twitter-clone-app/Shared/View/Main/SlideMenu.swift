@@ -27,7 +27,7 @@ struct SlideMenu: View {
                     Button {
                         isUserProfileActive = true
                     } label: {
-                        KFImage(URL(string: "http://localhost:3000/users/\(self.profileViewModel.user.id)/avatar"))
+                        KFImage(URL(string: "http://localhost:3000/users/\(self.viewModel.currentUser!.id)/avatar"))
                             .placeholder({
                                 Image("pp")
                                     .resizable()
