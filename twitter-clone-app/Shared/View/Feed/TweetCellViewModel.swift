@@ -11,10 +11,13 @@ class TweetCellViewModel: ObservableObject {
     
     @Published var tweet: Tweet
     @Published var user: User?
+    let currentUser: User
     
-    init(tweet: Tweet) {
+    init(tweet: Tweet, currentUser: User) {
         self.tweet = tweet
+        self.currentUser = currentUser
         self.fetchUser(userId: tweet.user)
+        checkIfUSerLikedPost()
         //print("viewmodel: \(tweet)")
     }
     
@@ -34,4 +37,30 @@ class TweetCellViewModel: ObservableObject {
         
         }
     }
+    
+    
+    func like() {
+        RequestServices.requestDomain = "\(NetworkConstants.baseURL)tweets/\(self.tweet.id)/like"
+        RequestServices.likeTwee(id: self.tweet.id) { result in
+            print("tweet has been liked")
+        }
+        self.tweet.didLike = true
+    }
+    
+    func unlike() {
+        RequestServices.requestDomain = "\(NetworkConstants.baseURL)tweets/\(self.tweet.id)/unlike"
+        RequestServices.likeTwee(id: self.tweet.id) { result in
+            print("tweet has been unliked")
+        }
+        self.tweet.didLike = false
+    }
+    
+    func checkIfUSerLikedPost() {
+        if(self.tweet.likes.contains(self.currentUser.id)) {
+            self.tweet.didLike = true
+        } else {
+            self.tweet.didLike = false
+        }
+    }
+    
 }

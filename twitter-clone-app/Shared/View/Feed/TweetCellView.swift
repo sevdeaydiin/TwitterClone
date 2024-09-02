@@ -11,6 +11,8 @@ import Kingfisher
 struct TweetCellView: View {
     @ObservedObject var viewModel: TweetCellViewModel
     
+    var didLike: Bool { return viewModel.tweet.didLike ?? false }
+    
     init(viewModel: TweetCellViewModel) {
         self.viewModel = viewModel
     }
@@ -82,11 +84,25 @@ struct TweetCellView: View {
                 }.foregroundStyle(.gray)
                 
                 Button {
-                    
+                    if(self.didLike) {
+                        self.viewModel.unlike()
+                    } else {
+                        self.viewModel.like()
+                    }
                 } label: {
-                    Image(systemName: "heart")
-                        .resizable()
-                        .frame(width: 18, height: 15)
+                    
+                    if(self.didLike == false) {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .frame(width: 18, height: 15)
+                    } else {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundStyle(.pink)
+                            .frame(width: 18, height: 15)
+                    }
+                    
                 }.foregroundStyle(.gray)
                 
                 HStack(spacing: 20) {
@@ -95,7 +111,7 @@ struct TweetCellView: View {
                     } label: {
                         Image(systemName: "bookmark")
                             .resizable()
-                            .frame(width: 18, height: 14)
+                            .frame(width: 14, height: 14)
                     }.foregroundStyle(.gray)
                     
                     Button {
