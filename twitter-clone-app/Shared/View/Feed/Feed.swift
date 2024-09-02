@@ -13,17 +13,24 @@ struct Feed: View {
     @ObservedObject var viewModel = FeedViewModel()
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack {
-                
-                ForEach(viewModel.tweets) { tweet in
-                    TweetCellView(viewModel: TweetCellViewModel(tweet: tweet, currentUser: user))
-                    Divider()
+        RefreshableScrollView(content:
+            ScrollView(showsIndicators: false) {
+                LazyVStack {
+                    
+                    ForEach(viewModel.tweets) { tweet in
+                        TweetCellView(viewModel: TweetCellViewModel(tweet: tweet, currentUser: user))
+                        Divider()
+                    }
                 }
+                .padding(.top)
+                //.padding(.horizontal)
+                .zIndex(0)
             }
-            .padding(.top)
-            //.padding(.horizontal)
-            .zIndex(0)
+        ) { control in
+            DispatchQueue.main.async {
+                self.viewModel.fetchTweets()
+                control.endRefreshing()
+            }
         }
     }
 }
