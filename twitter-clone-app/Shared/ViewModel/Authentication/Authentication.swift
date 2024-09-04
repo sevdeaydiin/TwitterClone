@@ -84,13 +84,17 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchUser(userId: String) {
-        AuthServices.fetchUser(id: userId) { result in
+        
+        let defaults = UserDefaults.standard
+        AuthServices.requestDomain = "\(NetworkConstants.baseURL)users/\(userId)"
+        
+        AuthServices.fetchUser() { result in
             switch result {
                 case .success(let data):
                 guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
                     
                     DispatchQueue.main.async {
-                        UserDefaults.standard.setValue(user.id, forKey: "userid")
+                        defaults.setValue(user.id, forKey: "userid")
                         self.isAuthenticated = true
                         self.currentUser = user
                         //print(user)
