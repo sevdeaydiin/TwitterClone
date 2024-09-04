@@ -24,7 +24,7 @@ class TweetCellViewModel: ObservableObject {
     func fetchUser(userId: String) {
         AuthServices.requestDomain = "\(NetworkConstants.baseURL)users/\(userId)"
         
-        AuthServices.fetchUser(id: userId) { result in
+        AuthServices.fetchUser() { result in
             switch result {
                 case .success(let data):
                 guard let user = try? JSONDecoder().decode(User.self, from: data ) else { return }
@@ -44,6 +44,12 @@ class TweetCellViewModel: ObservableObject {
         RequestServices.likeTwee(id: self.tweet.id) { result in
             print("tweet has been liked")
         }
+        
+        RequestServices.requestDomain = "\(NetworkConstants.baseURL)notifications"
+        RequestServices.sendNotification(username: self.currentUser.username, notSenderId: self.currentUser.id, notReceiverId: self.tweet.id, notificationType: NotificationType.like.rawValue, postText: self.tweet.text) { result in
+                print(result)
+        }
+        
         self.tweet.didLike = true
     }
     

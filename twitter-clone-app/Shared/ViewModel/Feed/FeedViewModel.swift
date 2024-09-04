@@ -16,7 +16,7 @@ class FeedViewModel: ObservableObject {
     
     func fetchTweets() {
         RequestServices.requestDomain = "http://localhost:3000/tweets"
-        RequestServices.fetchTweets { result in
+        RequestServices.fetchData { result in
             switch result {
             case .success(let data):
                 do {
