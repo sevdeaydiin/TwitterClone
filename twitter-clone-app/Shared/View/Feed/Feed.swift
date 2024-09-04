@@ -13,6 +13,7 @@ struct Feed: View {
     @ObservedObject var viewModel = FeedViewModel()
     
     var body: some View {
+        
         RefreshableScrollView(content:
             ScrollView(showsIndicators: false) {
                 LazyVStack {
@@ -21,6 +22,7 @@ struct Feed: View {
                         TweetCellView(viewModel: TweetCellViewModel(tweet: tweet, currentUser: user))
                         Divider()
                     }
+                    .padding(.vertical, 5)
                 }
                 .padding(.top)
                 //.padding(.horizontal)

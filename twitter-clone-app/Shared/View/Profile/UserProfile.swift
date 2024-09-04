@@ -235,6 +235,9 @@ struct UserProfile: View {
                             .frame(width: 0, height: 0, alignment: .top)
                             Spacer()
                         }
+                        
+                        
+                        
                     }
                     .padding(.horizontal, 5)
                     //.frame(alignment: .leading)
@@ -244,7 +247,7 @@ struct UserProfile: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 0) {
                                 TabButton(title: "Tweets", currentTab: $currentTab, animation: animation)
-                                TabButton(title: "Replies", currentTab: $currentTab, animation: animation)
+                                TabButton(title: "Tweet & Replies", currentTab: $currentTab, animation: animation)
                                 TabButton(title: "Media", currentTab: $currentTab, animation: animation)
                                 TabButton(title: "Likes", currentTab: $currentTab, animation: animation)
                             }
@@ -272,7 +275,7 @@ struct UserProfile: View {
                     // tweet
                     VStack(spacing: 18) {
                         ForEach(viewModel.tweets) { tweet in
-                            TweetCellView(viewModel: TweetCellViewModel(tweet: tweet))
+                            TweetCellView(viewModel: TweetCellViewModel(tweet: tweet, currentUser: AuthViewModel.shared.currentUser!))
                         }
                     }
                     .padding(.top, 60)

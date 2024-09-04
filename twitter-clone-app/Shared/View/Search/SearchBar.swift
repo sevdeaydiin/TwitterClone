@@ -25,9 +25,6 @@ struct SearchBar: View {
                             .foregroundStyle(.gray)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
-                        
-                        
-
                     }
                 )
             if isEditing {
@@ -42,8 +39,6 @@ struct SearchBar: View {
                         .padding(.trailing, 10)
                 }
             }
-            
-            
         }.padding(.horizontal, 15)
             .onTapGesture {
                 isEditing = true

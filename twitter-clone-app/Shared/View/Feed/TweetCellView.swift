@@ -41,12 +41,19 @@ struct TweetCellView: View {
                 
                 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("\(self.viewModel.tweet.username) ")
-                        .fontWeight(.bold)
-                        .foregroundStyle(.primary)
-                    +
-                    Text("@\(self.viewModel.tweet.username)")
-                        .foregroundStyle(.gray)
+                    
+                    if let name = self.viewModel.user?.name {
+                        
+                        if let username = self.viewModel.user?.username {
+                            Text(name)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.primary)
+                            +
+                            Text(" @\(username)")
+                                .foregroundStyle(.gray)
+                        }
+                    }
+                    
                     
                     Text(self.viewModel.tweet.text)
                         .frame(maxHeight: 100, alignment: .top)

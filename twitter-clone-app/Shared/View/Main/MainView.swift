@@ -71,7 +71,9 @@ struct MainView: View {
             }
             //.frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, Sizes.height * 0.05)
+            .ignoresSafeArea(.all)
         }
+        
     }
 }
 
