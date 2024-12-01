@@ -63,7 +63,7 @@ struct TweetCellView: View {
                             KFImage(source: .provider(KFImageProvider(image: uiImage)))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(height: 250)
+                                .frame(width: (Sizes.width / 2) + Sizes.width / 4, height: 250)
                                 .cornerRadius(15)
                         }
                     }

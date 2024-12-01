@@ -10,7 +10,7 @@ import SwiftUI
 struct Home: View {
     
     @State var showCreateTweet = false
-    @State var selectedIndex = 2
+    @State var selectedIndex = 0
     @Binding var x: CGFloat
     let user: User
     
@@ -19,23 +19,23 @@ struct Home: View {
             ZStack {
                 TabView(selection: $selectedIndex) {
                     Feed(user: user)
-
+                    
                         .tabItem { Image(systemName: "house") }
                         .tag(0)
                     
                     SearchView()
-
+                    
                         .tabItem { Image(systemName: "magnifyingglass") }
                         .tag(1)
                     
                     NotificationsView(user: user)
-
+                    
                         .tabItem { Image(systemName: "bell") }
                         .tag(2)
                     
                     MessagesView()
-                        //.toolbar(.hidden)
-
+                    //.toolbar(.hidden)
+                    
                         .tabItem {
                             Image("Messages")
                                 .renderingMode(.template)
@@ -97,7 +97,33 @@ struct Home: View {
                      .foregroundStyle(Color.bg)
                      }
                      .tag(3)*/
+                    
+                    
                 }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            self.showCreateTweet.toggle()
+                        } label: {
+                            Image(systemName: "plus")
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                            //.renderingMode(.template)
+                            //.resizable()
+                                .frame(width: 20, height: 20)
+                                .padding()
+                                .background(Color.bg)
+                                .clipShape(Circle())
+                        }
+                    }.padding()
+                }
+                .padding(.bottom, Sizes.height * 0.05)
+                
+                
                 //.padding(.bottom, 15)
                 
                 /*VStack {
@@ -122,8 +148,8 @@ struct Home: View {
                 }.padding(.bottom, Sizes.height * 0.11)*/
             }
         }
-        //.sheet(isPresented: $showCreateTweet, content: {
-        //    CreateTweetView(show: $showCreateTweet)
-        //})
+        .sheet(isPresented: $showCreateTweet, content: {
+            CreateTweetView(show: $showCreateTweet)
+        })
     }
 }

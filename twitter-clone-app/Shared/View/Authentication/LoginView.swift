@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var email = "ahmet.kocak@gmail.com"
+    @State var email = "sevde.aydn@gmail.com"
     @State var password = "123456789"
     @State var emailDone = false
     @EnvironmentObject var viewModel: AuthViewModel
