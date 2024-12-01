@@ -19,12 +19,12 @@ class SearchViewModel: ObservableObject {
         
         AuthServices.requestDomain = "http://localhost:3000/users"
         
-        AuthServices.fetchUser { result in
+        AuthServices.fetchUser { [weak self] result in
             switch result {
             case .success(let data):
                 guard let users = try? JSONDecoder().decode([User].self, from: data) else { return }
                 DispatchQueue.main.async {
-                    self.users = users
+                    self?.users = users
                 }
             case .failure(let error):
                 print(error.localizedDescription)

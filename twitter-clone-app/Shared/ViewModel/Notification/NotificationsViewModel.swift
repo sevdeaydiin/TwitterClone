@@ -20,12 +20,12 @@ class NotificationsViewModel: ObservableObject {
     func fetchNotifications() {
         RequestServices.requestDomain = "\(NetworkConstants.baseURL)notifications/\(self.user.id)"
         
-        RequestServices.fetchData { result in
+        RequestServices.fetchData { [weak self] result in
             switch result {
             case .success(let data):
                 guard let notifications = try? JSONDecoder().decode([Notification].self, from: data!) else { return }
                 DispatchQueue.main.async {
-                    self.notifications = notifications
+                    self?.notifications = notifications
                 }
             case .failure(let error):
                 print(error.localizedDescription)

@@ -37,7 +37,7 @@ class AuthViewModel: ObservableObject {
         
         let defaults = UserDefaults.standard
         
-        AuthServices.login(email: email, password: password) { result in
+        AuthServices.login(email: email, password: password) { [weak self] result in
             switch result {
                 case .success(let data):
                     if let data = data {
@@ -52,8 +52,8 @@ class AuthViewModel: ObservableObject {
                             DispatchQueue.main.async {
                                 defaults.set(user.token, forKey: "jsonwebtoken")
                                 defaults.set(user.user.id, forKey: "userid")
-                                self.isAuthenticated = true
-                                self.currentUser = user.user
+                                self?.isAuthenticated = true
+                                self?.currentUser = user.user
                                 print("logged in")
                             }
                         } catch {
@@ -71,7 +71,7 @@ class AuthViewModel: ObservableObject {
     
     func register(name: String, username: String, email: String, password: String) {
         
-        AuthServices.register(email: email, username: username, password: password, name: name) { result in
+        AuthServices.register(email: email, username: username, password: password, name: name) { [weak self] result in
             switch result {
                 case .success(let data):
                 guard let user = try? JSONDecoder().decode(ApiResponse.self, from: data as! Data) else {
@@ -88,15 +88,15 @@ class AuthViewModel: ObservableObject {
         let defaults = UserDefaults.standard
         AuthServices.requestDomain = "\(NetworkConstants.baseURL)users/\(userId)"
         
-        AuthServices.fetchUser() { result in
+        AuthServices.fetchUser() { [weak self] result in
             switch result {
                 case .success(let data):
                 guard let user = try? JSONDecoder().decode(User.self, from: data) else { return }
                     
                     DispatchQueue.main.async {
                         defaults.setValue(user.id, forKey: "userid")
-                        self.isAuthenticated = true
-                        self.currentUser = user
+                        self?.isAuthenticated = true
+                        self?.currentUser = user
                         //print(user)
                     }
                     

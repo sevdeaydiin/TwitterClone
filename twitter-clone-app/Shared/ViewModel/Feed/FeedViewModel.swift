@@ -16,13 +16,13 @@ class FeedViewModel: ObservableObject {
     
     func fetchTweets() {
         RequestServices.requestDomain = "http://localhost:3000/tweets"
-        RequestServices.fetchData { result in
+        RequestServices.fetchData { [weak self] result in
             switch result {
             case .success(let data):
                 do {
                     let tweets = try JSONDecoder().decode([Tweet].self, from: data!)
                     DispatchQueue.main.async {
-                        self.tweets = tweets
+                        self?.tweets = tweets
                     }
                 } catch {
                     print("JSON decode error: \(error)")
