@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  TwitterClone
+
+  Created by Sevde Aydın on 12/15/24.
+  
+*/
+
+"welcomeText" = "Şu anda dünyada neler olup bittiğine bakın.";
+"signInGoogle" = "Google ile giriş yap";
+"continueGoogle" = "Google ile devam et";
+"signInApple" = "Apple ile giriş yap";
+"continueApple" = "Apple ile devam et";
+"createAccount" = "Hesap oluştur";
+"agree" = "Kaydolduğunuzda, şunları kabul etmiş olursunuz ";
+"terms" = "Şartlar";
+"privacyPolicy" = "Gizlilik Politikası";
+"cookie" = ", ve çerez kullanımı.";
+"accountAlready" = "Zaten bir hesabınız var mı? ";
+"or" = "Ya da";
+
+/// Login
+"login" = "Giriş yap";
+"emailText" = "Başlamak için önce telefonunuzu, e-postanızı veya @kullanıcı adınızı girin";
+"email" = "Telefon, e-posta veya kullanıcı adı";
+"forgotPassword" = "Parolanızı mı unuttunuz?";
+"password" = "Şifrenizi girin";
+"passwordPlaceholder" = "Parola";
+
+/// Register
+"register" = "Kaydol";
+
+/// General
+"cancel" = "Geri";
+"next" = "İleri";

@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  TwitterClone
+
+  Created by Sevde Aydın on 12/15/24.
+  
+*/
+
+"welcomeText" = "See what's happening in the world right now.";
+"signInGoogle" = "Sign in with Google";
+"continueGoogle" = "Continue with Google";
+"signInApple" = "Sign in with Apple";
+"continueApple" = "Continue with Apple";
+"createAccount" = "Create account";
+"agree" = "By signing up, you agree to our ";
+"terms" = "Terms";
+"privacyPolicy" = "Privacy Policiy";
+"cookie" = ", and Cookie Use.";
+"accountAlready" = "Have an account already? ";
+"or" = "Or";
+
+/// Login
+"login" = "Log in";
+"emailText" = "To get started first enter your phone, email or @username";
+"email" = "Phone, email or username";
+"forgotPassword" = "Forgot password?";
+"password" = "Enter your password";
+"passwordPlaceholder" = "Passoword";
+
+"register" = "Register";
+
+/// General
+"cancel" = "Cancel";
+"next" = "Next";
