@@ -7,12 +7,28 @@
 
 import SwiftUI
 
-struct SecureTextField: View {
+struct SecureAuthTextField: View {
+    var placeholder: LocalizedStringKey
+    @Binding var password: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ZStack(alignment: .leading, content: {
+                if password.isEmpty {
+                    Text(placeholder)
+                        .foregroundStyle(.gray)
+                }
+                SecureField("", text: $password)
+                    .frame(height: 45)
+                    .foregroundStyle(.twitterBlue)
+            })
+            
+            Rectangle()
+                .frame(height: 1, alignment: .center)
+                .foregroundStyle(.gray)
+                .padding(.top, -2)
+        }
+        .padding(.horizontal)
     }
 }
 
-#Preview {
-    SecureTextField()
-}
