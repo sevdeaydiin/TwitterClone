@@ -1,0 +1,44 @@
+[
+    {
+        "_id": { "$oid": "6695a6d2ed723d08165362d8" },
+        "name": "Dilsad",
+        "username": "dlsd.erdogan",
+        "email": "dilsad.erdogan@gmail.com",
+        "followers": ["6959e623b0cfb49db97ae6f"],
+        "followings": ["6f079b9a02ee59b751ea757"],
+        "location": "Konya",
+        "bio": "Software Engineer",
+        "website": "",
+        "avatarExists": true,
+        "isCurrentUser": false,
+        "isFollow": false
+    },
+    {
+        "_id": { "$oid": "66b242b2db8d0faa648f7ae9" },
+        "name": "Emily Cooper",
+        "username": "emily_cooper",
+        "email": "emily.cooper@gmail.com",
+        "followers": ["66d5c86bdd3ef2f796ca5370"],
+        "followings": ["66959e623b0cfb49db97ae6f"],
+        "location": "Paris, France",
+        "bio": "This is Emily's bio.",
+        "website": "https://emilycooper.com",
+        "avatarExists": true,
+        "isCurrentUser": false,
+        "isFollow": false
+    },
+    {
+        "_id": { "$oid": "66f079b9a02ee59b751ea757" },
+        "name": "sevde aydin",
+        "username": "sevdeaydiin",
+        "email": "sevde.aydn@gmail.com",
+        "followers": ["66f07a1fa02ee59b751ea759", "6695a6d2ed723d08165362d8"],
+        "followings": [],
+        "location": "",
+        "bio": "ios dev",
+        "website": "",
+        "avatarExists": true,
+        "isCurrentUser": false,
+        "isFollow": false
+    }
+]

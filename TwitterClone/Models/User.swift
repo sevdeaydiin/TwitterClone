@@ -8,10 +8,19 @@
 import Foundation
 
 struct User: Decodable, Identifiable {
-    var _id: String
-    var id: String {
-        return _id
+    struct ObjectID: Decodable {
+        let oid: String
+
+        private enum CodingKeys: String, CodingKey {
+            case oid = "$oid"
+        }
     }
+    
+    var _id: ObjectID
+    var id: String {
+        return _id.oid
+    }
+    
     let username: String
     var name: String
     let email: String
