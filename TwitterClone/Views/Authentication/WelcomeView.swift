@@ -113,6 +113,7 @@ private struct PrivacyPolicyText: View {
     let privacyPolicy = LocaleKeys.Welcome.privacyPolicy.rawValue.locale()
     let cookie = LocaleKeys.Welcome.cookie.rawValue.locale()
     let accountAlready = LocaleKeys.Welcome.accountAlready.rawValue.locale()
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -128,7 +129,7 @@ private struct PrivacyPolicyText: View {
             
             HStack(spacing: 2) {
                 Text(accountAlready)
-                NavigationLink(destination: LoginView().toolbar(.hidden)) {
+                NavigationLink(destination: LoginView().navigationBarBackButtonHidden()) {
                     Text(LocaleKeys.Login.login.rawValue.locale())
                         .foregroundStyle(.twitterBlue)
                 }

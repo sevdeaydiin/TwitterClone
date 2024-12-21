@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct ApiResponse: Decodable {
+    var user: User
+    var token: String
+}
+
 struct User: Decodable, Identifiable {
     struct ObjectID: Decodable {
         let oid: String

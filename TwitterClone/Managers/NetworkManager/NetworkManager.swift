@@ -24,15 +24,23 @@ final class NetworkManager: NetworkService {
     }()
     
     func fetch<T: Decodable>(with endpoint: Endpoint) async throws -> T {
+        
         guard let urlRequest = endpoint.createURLRequest() else {
             throw NetworkError.invalidURL
         }
         
+        print("NM endpoint: \(urlRequest)")
+        
         let (data, response) = try await urlSession.data(for: urlRequest)
+        
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Gelen yanıt: \(jsonString)")
+        }
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
+        print("NM httpresponse: \(httpResponse)")
         
         guard (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.failedResponse(statusCode: httpResponse.statusCode)

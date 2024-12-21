@@ -13,6 +13,8 @@ struct LoginView: View {
     @State var password = "123456789"
     @State var emailDone = false
     
+    //@EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         if !emailDone {
             EmailView(email: $email, emailDone: $emailDone)
@@ -49,7 +51,8 @@ private struct PasswordView: View {
     @Binding var email: String
     @Binding var password: String
     @Binding var emailDone: Bool
-    
+    @EnvironmentObject var viewModel: AuthViewModel
+
     var body: some View {
         VStack {
             VStack {
@@ -59,14 +62,20 @@ private struct PasswordView: View {
             }
             Spacer()
             LoginButton(buttonText: LocaleKeys.Login.login.rawValue.locale(), action: {
-                
+                Task {
+                    await viewModel.login(email: email, password: password)
+                }
             })
+//            .disabled(viewModel.viewState == .loading)
+//            .overlay {
+//                Group {
+//                    if viewModel.viewState == .loading {
+//                        ProgressView()
+//                    }
+//                }
+//            }
         }
     }
-}
-
-#Preview {
-    LoginView()
 }
 
 private struct NavigationBar: View {
