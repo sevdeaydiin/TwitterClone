@@ -32,7 +32,6 @@ final class NetworkManagerTests: XCTestCase {
         
         MockURLSession.completionHandler = { request in
             let response = HTTPURLResponse(url: mockUrl!, statusCode: 200, httpVersion: nil, headerFields: nil)
-            print(mockUrl as Any)
             return (response, sampleJson)
         }
         
