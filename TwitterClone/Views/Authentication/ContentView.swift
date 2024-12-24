@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationView {
             Group {
                 if authViewModel.isAuthenticated {
-                    FeedView()
+                    MainView()
                 } else {
                     WelcomeView()
                 }

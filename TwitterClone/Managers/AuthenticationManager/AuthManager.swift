@@ -7,41 +7,46 @@
 
 import Foundation
 
-protocol AuthServiceProtocol {
+protocol AuthManagerProtocol {
     func login(email: String, password: String) async throws -> ApiResponse
     func register(username: String, email: String, password: String) async throws -> ApiResponse
     func fetchUser(userId: String) async throws -> ApiResponse
 }
- 
-final class AuthManager: AuthServiceProtocol {
-    private let networkService: NetworkService
-    
-    init(networkService: NetworkService) {
-        self.networkService = networkService
+
+final class AuthManager: AuthManagerProtocol {
+    private let networkManager: NetworkManagerProtocol
+
+    init(networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
     }
     
-    func login(email: String, password: String) async throws -> ApiResponse {
-            do {
-                let endpoint = UserEndpoint.loginUser(email: email, password: password)
-                return try await networkService.fetch(with: endpoint)
-            } catch {
-                // Hatanın türüne göre daha spesifik hatalar fırlatabilirsin
-                if let networkError = error as? NetworkError {
-                    throw networkError // NetworkError'ı olduğu gibi fırlat
-                } else {
-                    throw NetworkError.unknownError // Bilinmeyen hata
-                }
-            }
-        }
-    
+    func login(email: String, password: String) async throws -> ApiResponse {    
+        let requestBody = ["email": email, "password": password]
+        return try await networkManager.request(
+            endpoint: "/users/login",
+            method: .post,
+            body: requestBody,
+            headers: nil
+        )
+    }
+
     func register(username: String, email: String, password: String) async throws -> ApiResponse {
-        let endpoint = UserEndpoint.registerUser(username: username, email: email, password: password)
-        return try await networkService.fetch(with: endpoint)
+        let requestBody = ["username": username, "email": email, "password": password]
+        return try await networkManager.request(
+            endpoint: "/users",
+            method: .post,
+            body: requestBody,
+            headers: nil
+        )
     }
     
     func fetchUser(userId: String) async throws -> ApiResponse {
-        let endpoint = UserEndpoint.getUser(userId: userId)
-        return try await networkService.fetch(with: endpoint)
+        return try await networkManager.request(
+            endpoint: "/users/\(userId)",
+            method: .get,
+            body: nil,
+            headers: nil
+        )
     }
-    
 }
+

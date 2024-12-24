@@ -7,20 +7,19 @@
 
 import Foundation
 
-enum TweetEndpoint: Endpoint {
-    
-    case getTweets
-    
-    var path: String {
-        switch self {
-        case .getTweets:
-            return "/tweets"
-        }
-    }
-    
-    var httpMethod: HTTPMethod {
-        .get
-    }
-    
-    
-}
+//enum TweetEndpoint: Endpoint {
+//    
+//    case getTweets
+//    
+//    var path: String {
+//        switch self {
+//        case .getTweets:
+//            return "/tweets"
+//        }
+//    }
+//    
+//    var method: HTTPMethod {
+//        .get
+//    }
+//
+//}

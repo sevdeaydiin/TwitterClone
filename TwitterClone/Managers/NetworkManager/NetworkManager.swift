@@ -7,50 +7,44 @@
 
 import Foundation
 
-protocol NetworkService: AnyObject {
-    func fetch<T: Decodable>(with endpoint: Endpoint) async throws -> T
+protocol NetworkManagerProtocol {
+    func request<T: Decodable>(
+        endpoint: String,
+        method: HTTPMethod,
+        body: Encodable?,
+        headers: [String: String]?
+    ) async throws -> T
 }
 
-final class NetworkManager: NetworkService {
-    private let urlSession: URLSession
-    
-    init(urlSession: URLSession = .shared) {
-        self.urlSession = urlSession
-    }
-    
-    private lazy var jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        return jsonDecoder
-    }()
-    
-    func fetch<T: Decodable>(with endpoint: Endpoint) async throws -> T {
-        
-        guard let urlRequest = endpoint.createURLRequest() else {
+final class NetworkManager: NetworkManagerProtocol {
+    func request<T: Decodable>(
+        endpoint: String,
+        method: HTTPMethod,
+        body: Encodable? = nil,
+        headers: [String: String]? = nil
+    ) async throws -> T {
+        guard let url = URL(string: "http://localhost:3000\(endpoint)") else {
             throw NetworkError.invalidURL
         }
         
-        print("NM endpoint: \(urlRequest)")
+        var request = URLRequest(url: url)
+        print("request: \(url)")
+        request.httpMethod = method.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let (data, response) = try await urlSession.data(for: urlRequest)
-        
-        if let jsonString = String(data: data, encoding: .utf8) {
-            print("Gelen yanıt: \(jsonString)")
+        headers?.forEach { key, value in
+            request.setValue(value, forHTTPHeaderField: key)
         }
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        if let body = body {
+            request.httpBody = try JSONEncoder().encode(body)
+        }
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.invalidResponse
         }
-        print("NM httpresponse: \(httpResponse)")
         
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.failedResponse(statusCode: httpResponse.statusCode)
-        }
-        
-        do {
-            let decodedResponse = try jsonDecoder.decode(T.self, from: data)
-            return decodedResponse
-        } catch {
-            throw NetworkError.decodeFailed(errorDescription: error.localizedDescription)
-        }
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }

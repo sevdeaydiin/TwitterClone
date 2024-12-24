@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var email = "sevde.aydn@gmail.com"
+    @State var email = "emily.cooper@gmail.com"
     @State var password = "123456789"
     @State var emailDone = false
     
