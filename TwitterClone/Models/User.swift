@@ -13,19 +13,8 @@ struct ApiResponse: Decodable {
 }
 
 struct User: Decodable, Identifiable {
-    struct ObjectID: Decodable {
-        let oid: String
-
-        private enum CodingKeys: String, CodingKey {
-            case oid = "$oid"
-        }
-    }
-    
-    var _id: ObjectID
-    var id: String {
-        return _id.oid
-    }
-    
+    var _id: String
+    var id: String { return _id }
     let username: String
     var name: String
     let email: String
@@ -34,7 +23,10 @@ struct User: Decodable, Identifiable {
     var website: String?
     var avatarExists: Bool?
     var followers: [String]?
-    var following: [String]?
-    var isCurrentUser: Bool? = false
-    var isFollow: Bool? = false
+    var followings: [String]?
+    
+    private enum CodingKeys: String, CodingKey {
+        case _id, username, name, email, location, bio, website, avatarExists, followers, followings
+    }
 }
+
