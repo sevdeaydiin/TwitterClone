@@ -7,44 +7,32 @@
 
 import Foundation
 
-protocol NetworkManagerProtocol {
-    func request<T: Decodable>(
-        endpoint: String,
-        method: HTTPMethod,
-        body: Encodable?,
-        headers: [String: String]?
-    ) async throws -> T
+protocol NetworkService: AnyObject {
+    func fetch<T: Decodable>(with endpoint: Endpoint) async throws -> T
 }
 
-final class NetworkManager: NetworkManagerProtocol {
-    func request<T: Decodable>(
-        endpoint: String,
-        method: HTTPMethod,
-        body: Encodable? = nil,
-        headers: [String: String]? = nil
-    ) async throws -> T {
-        guard let url = URL(string: "http://localhost:3000\(endpoint)") else {
+final class NetworkManager: NetworkService {
+    func fetch<T>(with endpoint: any Endpoint) async throws -> T where T : Decodable {
+        guard let url = endpoint.url else {
             throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
-        print("request: \(url)")
-        request.httpMethod = method.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = endpoint.method.rawValue
         
-        headers?.forEach { key, value in
-            request.setValue(value, forHTTPHeaderField: key)
+        if let body = endpoint.body {
+            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
+        request.allHTTPHeaderFields = endpoint.headers
         
-        if let body = body {
-            request.httpBody = try JSONEncoder().encode(body)
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+                throw NetworkError.invalidResponse
+            }
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw NetworkError.unknown
         }
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidResponse
-        }
-        
-        return try JSONDecoder().decode(T.self, from: data)
     }
 }

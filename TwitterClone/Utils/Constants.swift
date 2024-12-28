@@ -8,5 +8,6 @@
 import Foundation
 
 struct K {
+   static let baseURL = "http://localhost:3000/"
     
 }

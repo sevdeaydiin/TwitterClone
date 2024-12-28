@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let authManager = AuthManager(networkManager: networkManager)
         let authViewModel = AuthViewModel(authManager: authManager)
         let contentView = ContentView().environmentObject(authViewModel)
-        //let mainView = FeedView(viewModel: TweetViewModel(networkManager: NetworkManager(), cacheManager: CacheManager()))
         let window = UIWindow(windowScene: windowSceen)
         window.rootViewController = UIHostingController(rootView: contentView)
         self.window = window

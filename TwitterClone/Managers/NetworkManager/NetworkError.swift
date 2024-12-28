@@ -13,7 +13,7 @@ enum NetworkError: LocalizedError, Equatable {
     case failedResponse(statusCode: Int)
     case rateLimitExceeded
     case decodeFailed(errorDescription: String)
-    case unknownError
+    case unknown
     
     var errorDescription: String {
         switch self {
@@ -27,8 +27,8 @@ enum NetworkError: LocalizedError, Equatable {
             "Rate Limit Exceeded You Can Try Again Later"
         case .decodeFailed(let decodeErrorDescription):
             "Decode Failed With DecodeError: \n\(decodeErrorDescription)\n"
-        case .unknownError:
-            "Bilinmeyen hata"
+        case .unknown:
+            "Unknown Error"
         }
     }
 }

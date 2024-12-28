@@ -30,3 +30,8 @@ struct User: Decodable, Identifiable {
     }
 }
 
+extension User {
+    static var mockData: Self {
+        .init(_id: "123", username: "sevde", name: "sevde", email: "sevde.aydin@gmail.com")
+    }
+}

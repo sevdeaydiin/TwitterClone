@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 enum ViewState: Equatable {
     case idle
@@ -23,14 +22,11 @@ final class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
     @Published var errorMessage: String?
     
-    private let authManager: AuthManagerProtocol
-    private let defaults: UserDefaults
-    private var cancellables = Set<AnyCancellable>()
-    private var currentFetchTask: Task<Void, Never>?
+    private let authManager: AuthService
 
-    init(authManager: AuthManagerProtocol, defaults: UserDefaults = .standard) {
+    init(authManager: AuthService) {
         self.authManager = authManager
-        self.defaults = defaults
+        //logout()
         initializeAuthenticationState()
     }
 
@@ -39,45 +35,46 @@ final class AuthViewModel: ObservableObject {
     }
 
     private func initializeAuthenticationState() {
-        if let token = defaults.string(forKey: "jsonwebtoken"), let userId = defaults.string(forKey: "userId") {
-            self.isAuthenticated = true
-            print("Stored Token: \(token)")
-            print("Stored UserID: \(userId)")
-            Task {
-                await fetchUser(userId: userId)
+        let defaults = UserDefaults.standard
+        let token = defaults.object(forKey: "jsonwebtoken")
+        if token != nil {
+            isAuthenticated = true
+            if let userId = defaults.object(forKey: "userId") as? String {
+                //self.isAuthenticated = true
+                print("Stored Token: \(String(describing: token))")
+                print("Stored UserID: \(userId)")
+                Task {
+                    await fetchUser(userId: userId)
+                }
             }
         }
     }
 
     func login(email: String, password: String) async {
-        print("AuthViewModel.login başladı. Email: \(email)")
         self.viewState = .loading
         errorMessage = nil
         
         do {
             let response = try await authManager.login(email: email, password: password)
-            print(response)
             saveAuthenticationData(response: response)
             self.viewState = .showData
         } catch let error as NetworkError {
             handleError(error: error)
         } catch {
-            handleError(error: NetworkError.unknownError)
+            handleError(error: NetworkError.unknown)
         }
-        
-        //print("AuthViewModel.login bitti. isAuthenticated: \(isAuthenticated)")
     }
 
     func register(name: String, username: String, email: String, password: String) async {
         self.viewState = .loading
         
         do {
-            _ = try await authManager.register(username: username, email: email, password: password)
+            _ = try await authManager.register(name: name, username: username, email: email, password: password)
             self.viewState = .showData
         } catch let error as NetworkError {
             handleError(error: error)
         } catch {
-            handleError(error: NetworkError.unknownError)
+            handleError(error: NetworkError.unknown)
         }
     }
 
@@ -86,13 +83,13 @@ final class AuthViewModel: ObservableObject {
         
         do {
             let user = try await authManager.fetchUser(userId: userId)
-            self.currentUser = user.user
+            self.currentUser = user
             self.isAuthenticated = true
             self.viewState = .showData
         } catch let error as NetworkError {
             handleError(error: error)
         } catch {
-            handleError(error: NetworkError.unknownError)
+            handleError(error: NetworkError.unknown)
         }
     }
 
@@ -101,6 +98,7 @@ final class AuthViewModel: ObservableObject {
     }
 
     private func saveAuthenticationData(response: ApiResponse) {
+        let defaults = UserDefaults.standard
         defaults.set(response.token, forKey: "jsonwebtoken")
         defaults.set(response.user.id, forKey: "userId")
         self.currentUser = response.user
@@ -108,6 +106,7 @@ final class AuthViewModel: ObservableObject {
     }
 
     private func clearAuthenticationData() {
+        let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "jsonwebtoken")
         defaults.removeObject(forKey: "userId")
         self.currentUser = nil
