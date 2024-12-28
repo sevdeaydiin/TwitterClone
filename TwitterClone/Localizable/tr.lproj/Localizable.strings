@@ -29,6 +29,10 @@
 
 /// Register
 "register" = "Kaydol";
+"createAccount" = "Hesabınızı oluşturun";
+"name" = "İsim";
+"username" = "Kullanıcı adı";
+"email" = "Telefon numarası ya da email";
 
 /// General
 "cancel" = "Geri";

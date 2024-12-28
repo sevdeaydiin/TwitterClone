@@ -34,6 +34,14 @@ struct LocaleKeys {
         case passwordPlaceholder = "passwordPlaceholder"
     }
     
+    enum Register: String {
+        case register = "register"
+        case createAccount = "createAccount"
+        case name = "name"
+        case username = "username"
+        case email = "email"
+    }
+    
     enum General: String {
         case cancel = "cancel"
         case next = "next"

@@ -13,8 +13,6 @@ struct LoginView: View {
     @State var password = "123456789"
     @State var emailDone = false
     
-    //@EnvironmentObject var viewModel: AuthViewModel
-    
     var body: some View {
         if !emailDone {
             EmailView(email: $email, emailDone: $emailDone)
@@ -66,19 +64,11 @@ private struct PasswordView: View {
                     await viewModel.login(email: email, password: password)
                 }
             })
-//            .disabled(viewModel.viewState == .loading)
-//            .overlay {
-//                Group {
-//                    if viewModel.viewState == .loading {
-//                        ProgressView()
-//                    }
-//                }
-//            }
         }
     }
 }
 
-private struct NavigationBar: View {
+struct NavigationBar: View {
     var body: some View {
         ZStack {
             HStack {

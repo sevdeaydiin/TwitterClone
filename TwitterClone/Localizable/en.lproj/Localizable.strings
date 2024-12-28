@@ -25,9 +25,13 @@
 "email" = "Phone, email or username";
 "forgotPassword" = "Forgot password?";
 "password" = "Enter your password";
-"passwordPlaceholder" = "Passoword";
+"passwordPlaceholder" = "Password";
 
 "register" = "Register";
+"createAccount" = "Create your account";
+"name" = "Name";
+"username" = "Username";
+"email" = "Phone number or email";
 
 /// General
 "cancel" = "Cancel";
