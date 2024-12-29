@@ -21,7 +21,13 @@ struct Tweet: Identifiable, Decodable {
     let userId: String
     let username: String
     let user: String
-    let image: ImageData?
+    //let image: ImageData?
     var likes: [String]
     var didLike: Bool? = false
+}
+
+extension Tweet {
+    static var mockData: Self {
+        .init(_id: "123", text: "hello twitter whats up", userId: "123", username: "sevde", user: "sevde aydin", likes: ["123"])
+    }
 }

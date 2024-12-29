@@ -7,59 +7,33 @@
 
 import Foundation
 
-//protocol TweetManagerProtocol {
-//    func fetchTweets() async throws -> [Tweet]
-//    func postTweet(text: String, image: Data?) async throws -> Tweet
-//    func likeTweet(tweetId: String) async throws
-//    func unlikeTweet(tweetId: String) async throws
-//}
-//
-//final class TweetManager: TweetManagerProtocol {
-//    private let networkManager: NetworkManagerProtocol
-//    private let token: String
-//
-//    init(networkManager: NetworkManagerProtocol, token: String) {
-//        self.networkManager = networkManager
-//        self.token = token
-//    }
-//
-//    func fetchTweets() async throws -> [Tweet] {
-//        try await networkManager.request(
-//            endpoint: "tweets",
-//            method: .get,
-//            body: nil,
-//            headers: ["Authorization": "Bearer \(token)"]
-//        )
-//    }
-//
-//    func postTweet(text: String, image: Data?) async throws -> Tweet {
-//        let requestBody: [String: Any] = [
-//            "text": text,
-//            "image": image != nil ? image!.base64EncodedString() : NSNull()
-//        ]
-//        return try await networkManager.request(
-//            endpoint: "tweets",
-//            method: .post,
-//            body: requestBody,
-//            headers: ["Authorization": "Bearer \(token)"]
-//        )
-//    }
-//
-//    func likeTweet(tweetId: String) async throws {
-//        _ = try await networkManager.request(
-//            endpoint: "tweets/\(tweetId)/like",
-//            method: .post,
-//            body: nil,
-//            headers: ["Authorization": "Bearer \(token)"]
-//        )
-//    }
-//
-//    func unlikeTweet(tweetId: String) async throws {
-//        _ = try await networkManager.request(
-//            endpoint: "tweets/\(tweetId)/unlike",
-//            method: .post,
-//            body: nil,
-//            headers: ["Authorization": "Bearer \(token)"]
-//        )
-//    }
-//}
+protocol TweetService {
+    func fetchTweets() async throws -> [Tweet]
+    func postTweet(text: String, username: String, userId: String) async throws -> Tweet
+    //func likeTweet(tweetId: String) async throws
+    //func unlikeTweet(tweetId: String) async throws
+}
+
+final class TweetManager: TweetService {
+    private let networkManager: NetworkService
+    
+    init(networkManager: NetworkService) {
+        self.networkManager = networkManager
+    }
+    
+    func fetchTweets() async throws -> [Tweet] {
+        let endpoint = TweetEndpoint.fetchTweets
+        return try await networkManager.fetch(with: endpoint)
+    }
+    
+    func postTweet(text: String, username: String, userId: String) async throws -> Tweet {
+        let body: [String: Any] = [
+            "text": text,
+            "username": username,
+            "userId": userId
+        ]
+        let endpoint = TweetEndpoint.postTweet(body: body)
+        return try await networkManager.fetch(with: endpoint)
+    }
+}
+
