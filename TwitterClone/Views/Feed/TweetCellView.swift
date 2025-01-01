@@ -28,21 +28,19 @@ struct TweetCellView: View {
                 
                 ///
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("name")
+                    Text(tweet.username)
                         .fontWeight(.bold)
                         .foregroundStyle(.primary)
                     +
-                    Text(" username")
+                    Text(" @\(tweet.username)")
                         .foregroundStyle(.gray)
                     
                     Text(tweet.text)
                         .frame(maxHeight: 100, alignment: .top)
-                    
                 }
-                
                 Spacer()
             }
-            
+            /// Comments, retweet, like, bookmark, share
             CellBottom()
         }
         .frame(maxWidth: .infinity)
@@ -63,25 +61,25 @@ private struct PlaceholderView: View {
             .clipShape(Circle())
     }
 }
+private struct TweetCellBottom: View {
+    let image: String
+    
+    var body: some View {
+        Button {
+            
+        } label: {
+            Image(image)
+                .resizable()
+                .frame(width: 18, height: 18)
+        }.foregroundStyle(.gray)
+    }
+}
 
 private struct CellBottom: View {
     var body: some View {
         HStack(spacing: 50) {
-            Button {
-                
-            } label: {
-                Image("comments")
-                    .resizable()
-                    .frame(width: 18, height: 18)
-            }.foregroundStyle(.gray)
-            
-            Button {
-                
-            } label: {
-                Image("retweet")
-                    .resizable()
-                    .frame(width: 18, height: 18)
-            }.foregroundStyle(.gray)
+            TweetCellBottom(image: "comments")
+            TweetCellBottom(image: "retweet")
             
             Button {
                 //if(self.didLike) {
@@ -106,21 +104,8 @@ private struct CellBottom: View {
             }.foregroundStyle(.gray)
             
             HStack(spacing: 20) {
-                Button {
-                    
-                } label: {
-                    Image("bookmark")
-                        .resizable()
-                        .frame(width: 18, height: 18)
-                }.foregroundStyle(.gray)
-                
-                Button {
-                    
-                } label: {
-                    Image("upload")
-                        .resizable()
-                        .frame(width: 18, height: 18)
-                }.foregroundStyle(.gray)
+                TweetCellBottom(image: "bookmark")
+                TweetCellBottom(image: "upload")
             }
         }
         .padding(.top, 4)

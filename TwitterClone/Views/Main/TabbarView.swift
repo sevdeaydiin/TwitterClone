@@ -14,18 +14,31 @@ struct TabbarView: View {
             ZStack {
                 TabView(selection: $selectedIndex) {
                     FeedView(viewModel: TweetViewModel(tweetManager: TweetManager(networkManager: NetworkManager())))
-                        .tabItem { Image(systemName: "house") }
+                        .tabItem {
+                            Image(systemName: "house")
+                                .environment(\.symbolVariants, selectedIndex == 0 ? .fill : .none)
+                        }
                         .tag(0)
                     SearchView()
-                        .tabItem { Image(systemName: "magnifyingglass") }
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                                .environment(\.symbolVariants, selectedIndex == 1 ? .fill : .none)
+                        }
                         .tag(1)
                     NotificationView()
-                        .tabItem { Image(systemName: "bell") }
+                        .tabItem {
+                            Image(systemName: "bell")
+                                .environment(\.symbolVariants, selectedIndex == 2 ? .fill : .none)
+                        }
                         .tag(2)
                     ProfileView()
-                        .tabItem { Image(systemName: "person") }
+                        .tabItem {
+                            Image(systemName: "person")
+                                .environment(\.symbolVariants, selectedIndex == 3 ? .fill : .none)
+                        }
                         .tag(3)
                 }
+                .tint(.text)
             }
         }
     }

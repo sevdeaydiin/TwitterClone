@@ -6,26 +6,41 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct NavbarView: View {
     @Binding var x: CGFloat
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    withAnimation {
-                        x = 0
+                if let user = viewModel.currentUser {
+                    Button {
+                        withAnimation {
+                            x = 0
+                        }
+                    } label: {
+                        KFImage(URL(string: "\(K.baseURL)users/\(user.id)/avatar"))
+                            .placeholder {
+                                Image(systemName: "person")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .clipShape(Circle())
+                            }
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .clipShape(Circle())
+    //                        .font(.system(size: 24))
+    //                        .foregroundStyle(.twitterBlue)
                     }
-                } label: {
-                    Image(systemName: "line.horizontal.3")
-                        .font(.system(size: 24))
-                        .foregroundStyle(.twitterBlue)
                 }
-                
+
                 Spacer(minLength: 0)
                 
-                Image("twitter")
+                Image(Images.twitter)
                     .resizable()
                     .scaledToFill()
                     .padding(.trailing)
