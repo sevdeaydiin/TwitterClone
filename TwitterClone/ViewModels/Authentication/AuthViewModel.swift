@@ -26,7 +26,6 @@ final class AuthViewModel: ObservableObject {
 
     init(authManager: AuthService) {
         self.authManager = authManager
-        //logout()
         initializeAuthenticationState()
     }
 

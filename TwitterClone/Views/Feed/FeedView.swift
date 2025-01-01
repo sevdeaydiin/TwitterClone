@@ -10,31 +10,34 @@ import SwiftUI
 struct FeedView: View {
     
     @StateObject private var viewModel: TweetViewModel
-    init(viewModel: TweetViewModel) {
+    @StateObject private var authViewModel: AuthViewModel
+    init(viewModel: TweetViewModel, authViewModel: AuthViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        _authViewModel = StateObject(wrappedValue: authViewModel)
     }
     
     var body: some View {
-        RefreshableScrollView(
-            content:
-                ScrollView(showsIndicators: false){
-                    ForEach(viewModel.tweets) { tweet in
-                        TweetCellView(tweet: tweet)
-                        Divider()
+        if let currentUser = authViewModel.currentUser {
+            RefreshableScrollView(
+                content:
+                    ScrollView(showsIndicators: false){
+                        ForEach(viewModel.tweets) { tweet in
+                            TweetCellView(tweet: tweet, currentUser: currentUser)
+                            Divider()
+                        }
+                        .padding(.vertical, 5)
                     }
-                    .padding(.vertical, 5)
+                    .padding(.top)
+                    .zIndex(0)
+            ) { control  in
+                DispatchQueue.main.async {
+                    Task {
+                        await self.viewModel.fetchTweets()
+                    }
+                    control.endRefreshing()
                 }
-                .padding(.top)
-                .zIndex(0)
-        ) { control  in
-            DispatchQueue.main.async {
-                Task {
-                    await self.viewModel.fetchTweets()
-                }
-                control.endRefreshing()
             }
-        }
+        }  
     }
 }
-
 

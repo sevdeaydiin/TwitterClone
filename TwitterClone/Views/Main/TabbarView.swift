@@ -13,7 +13,9 @@ struct TabbarView: View {
         VStack {
             ZStack {
                 TabView(selection: $selectedIndex) {
-                    FeedView(viewModel: TweetViewModel(tweetManager: TweetManager(networkManager: NetworkManager())))
+                    FeedView(
+                        viewModel: TweetViewModel(tweetManager: TweetManager(networkManager: NetworkManager())), authViewModel: AuthViewModel(authManager: AuthManager(networkManager: NetworkManager()))
+                    )
                         .tabItem {
                             Image(systemName: "house")
                                 .environment(\.symbolVariants, selectedIndex == 0 ? .fill : .none)

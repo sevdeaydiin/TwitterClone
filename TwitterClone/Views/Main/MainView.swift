@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
     let user: User
     @State var width = UIScreen.main.bounds.width - 90
     @State var x = -UIScreen.main.bounds.width + 90
@@ -26,7 +25,7 @@ struct MainView: View {
                 )
                 .offset(x: x == 0 ? width : 0)
                 
-                SlideMenu()
+                SlideMenu(viewModel: AuthViewModel(authManager: AuthManager(networkManager: NetworkManager())))
                     .shadow(color: .black.opacity(x != 0 ? 0.1 : 0), radius: 5, x: 5, y: 0)
                     .offset(x: x)
                     .ignoresSafeArea(.all, edges: .vertical)
@@ -59,11 +58,11 @@ struct MainView: View {
                         })
                     )
             }
-            .onTapGesture {
-                withAnimation {
-                    x = -width
-                }
-            }
+//            .onTapGesture {
+//                withAnimation {
+//                    x = -width
+//                }
+//            }
             .toolbar(.hidden)
             .navigationTitle("")
             .navigationDestination(isPresented: $isUserProfileActive) {

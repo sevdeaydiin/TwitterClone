@@ -11,12 +11,12 @@ import Kingfisher
 struct TweetCellView: View {
 
     let tweet: Tweet
+    let currentUser: User
     
     var body: some View {
         VStack {
-            
             HStack(alignment: .top, spacing: 10) {
-                KFImage(URL(string: "http://localhost:3000/users/66f079b9a02ee59b751ea757/avatar"))
+                KFImage(URL(string: "\(K.baseURL)users/\(currentUser.id)/avatar"))
                     .placeholder {
                         PlaceholderView()
                     }
@@ -49,7 +49,7 @@ struct TweetCellView: View {
 }
 
 #Preview {
-    TweetCellView(tweet: Tweet.mockData)
+    TweetCellView(tweet: Tweet.mockData, currentUser: User.mockData)
 }
 
 private struct PlaceholderView: View {
@@ -70,7 +70,7 @@ private struct TweetCellBottom: View {
         } label: {
             Image(image)
                 .resizable()
-                .frame(width: 18, height: 18)
+                .frame(width: 15, height: 15)
         }.foregroundStyle(.gray)
     }
 }
