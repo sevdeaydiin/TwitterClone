@@ -40,6 +40,18 @@ final class TweetViewModel: ObservableObject {
         }
     }
     
+    func postTweet(text: String, username: String, userId: String) async {
+        self.viewState = .loading
+        do {
+            try await tweetManager.postTweet(text: text, username: username, userId: userId)
+            self.viewState = .showData
+        } catch let error as NetworkError {
+            handleError(error: error)
+        } catch {
+            handleError(error: NetworkError.unknown)
+        }
+    }
+    
     private func handleError(error: NetworkError) {
         self.viewState = .error(error.localizedDescription)
         self.errorMessage = error.localizedDescription

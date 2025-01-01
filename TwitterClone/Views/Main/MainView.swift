@@ -18,7 +18,7 @@ struct MainView: View {
             ZStack (alignment: Alignment(horizontal: .leading, vertical: .center)) {
                 VStack {
                     NavbarView(x: $x)
-                    TabbarView()
+                    TabbarView(user: user)
                 }
                 .overlay(
                     Color.black.opacity(x == 0 ? 0.5 : 0)
