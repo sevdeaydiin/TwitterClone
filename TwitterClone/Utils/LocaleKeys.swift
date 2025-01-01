@@ -42,6 +42,10 @@ struct LocaleKeys {
         case email = "email"
     }
     
+    enum Search: String {
+        case search = "search"
+    }
+    
     enum General: String {
         case cancel = "cancel"
         case next = "next"

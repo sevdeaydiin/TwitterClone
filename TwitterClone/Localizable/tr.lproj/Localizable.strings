@@ -34,6 +34,9 @@
 "username" = "Kullanıcı adı";
 "email" = "Telefon numarası ya da email";
 
+/// Search
+"search" = "Ara";
+
 /// General
 "cancel" = "Geri";
 "next" = "İleri";
